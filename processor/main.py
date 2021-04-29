@@ -38,6 +38,29 @@ mapped_foods = {
     58: "Sugar" 
 }
 
+# Change NaN values for foods to be 0
+for food in mapped_foods.values():
+    survey_df[food].fillna(0, inplace=True)
+
+# Change NaN values for certain questions to 'no'
+survey_df['Are you involved in any sustainability groups on campus? If so, which ones? (groups on campus: https://sustainability.umd.edu/get-involved/students/student-groups)'].fillna('no', inplace=True)
+survey_df['Have you worked on a project that is sustainability or carbon footprint related? If so, explain.'].fillna('no', inplace=True)
+
+# # Fill in missing data in dataframe
+# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+#     print(survey_df)
+
+# If we want to add more columns to the final dataset, just find the cell number and enter a column name
+additional_columns = {
+    'B70': ('Metric 1 Total (kg)', []),
+    'G70': ('Metric 2 Total (CO2)', []),
+    'L70': ('Metric 3 Total (ha)', []),
+    'Q70': ('Metric 4 Total (CO2)', []),
+    'V70': ('Metric 2 + 4 Total (CO2)', []),
+    'AA70': ('Metric 5 Total (millions of kcal)', []),
+}
+
+# Begin getting values from the calculator
 user_foods_df = survey_df[mapped_foods.values()]
 
 for i, user in user_foods_df.iterrows():
@@ -54,14 +77,15 @@ for i, user in user_foods_df.iterrows():
                 input_sheet.range(current_cell).value = 0
 
     # Get important updated output totals or whatever from the output sheet
-    # Metric 1 Total is cell B70
-    # Metric 2 Total is cell G70
-    # Metric 3 Total is cell L70
-    # Metric 4 Total is cell Q70
-    # Metric 2 + 4 Total is cell V70
-    # Metric 5 Total is cell AA70 
+    for cell in additional_columns.keys():
+        additional_columns[cell][1].append(output_sheet.range(cell).value)
+
+# Finally create the new rows
+for col_name, col_val in additional_columns.values():
+    survey_df[col_name] = col_val
 
 # Output to 'data' folder in the root directory
+survey_df.to_csv('../data/formatted-data.csv', index=False)
 
 
 

@@ -24,7 +24,7 @@ Configuration can be done via the `idyll` field in `package.json`.
 
 [var name:"state" value:0 /]
 // Our food data variable
-[data name:'foodData' source:'Food Choices Form.csv' /]
+[data name:'foodData' source:'formatted-data.csv' /]
 
 [Scroller currentStep:state]
 
