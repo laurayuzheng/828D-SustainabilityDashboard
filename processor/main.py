@@ -54,16 +54,19 @@ class Processor():
 
     def calculate(self, cell_lst):
         additional_columns = self.__construct_columns(cell_lst)
-        user_foods_df = self.survey_df[self.mapped_foods.values()]
 
-        for i, user in user_foods_df.iterrows():
+        for i, user in self.survey_df.iterrows():
             # Insert data for each sample into calculator
             # Using only the 2015 column
             for index in range(6, 72):
                 current_cell = 'B' + str(index)
                 if index in self.mapped_foods:
                     csv_food_name = self.mapped_foods[index]
-                    self.input_sheet.range(current_cell).value = user[csv_food_name]
+                    value = user[csv_food_name]
+                    if user.iloc[1] == 'Pounds (lbs)':
+                        # Need to do conversion since output is in kg
+                        value *= 0.4536
+                    self.input_sheet.range(current_cell).value = value
                 else:
                     cell_value = self.input_sheet.range(current_cell).value
                     if cell_value != None:
@@ -77,7 +80,7 @@ class Processor():
         for col_name, col_vals in additional_columns.values():
             self.survey_df[col_name] = col_vals
 
-    def fill_in_missing(self):
+    def tidy_data(self):
         # Change NaN values for foods to be 0
         for food in self.mapped_foods.values():
             self.survey_df[food].fillna(0, inplace=True)
@@ -114,7 +117,7 @@ if __name__ == "__main__":
     processor = Processor()
     # Currently, only individual food totals are included
     included_cells = [('B', '70'), ('G', '70'), ('L', '70'), ('Q', '70'), ('V', '70'), ('AA', '70')]
-    processor.fill_in_missing()
+    processor.tidy_data()
     processor.calculate(included_cells)
 
     # Output to 'data' folder in the root directory
