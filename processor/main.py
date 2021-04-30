@@ -34,12 +34,12 @@ class Processor():
 
     # Only columns in the calculator we will be looking at
     mapped_columns = {
-        'B': 'Metric 1 (kg)', 
-        'G': 'Metric 2 (CO2)', 
-        'L': 'Metric 3 (ha)', 
-        'Q': 'Metric 4 (CO2)', 
-        'V': 'Metric 2 + 4 (CO2)', 
-        'AA': 'Metric 5 (millions of kcal)'
+        'B': 'Metric 1:Food Purchase Weight:(kg)', 
+        'G': 'Metric 2:Emissions from Agricultural Supply Chains:(tonnes CO2)', 
+        'L': 'Metric 3:Food Related Land Use:(ha)', 
+        'Q': 'Metric 4:Food Related Carbon Opportunity Costs:(tonnes CO2)', 
+        'V': 'Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2)', 
+        'AA': 'Metric 5:Total Calories:(millions of kcal)'
     }
 
     def __init__(self):
@@ -85,9 +85,21 @@ class Processor():
         for food in self.mapped_foods.values():
             self.survey_df[food].fillna(0, inplace=True)
 
+        # Change carpool percentage to not include '%' sign
+        self.survey_df['What percent (%) of the time do you carpool when you get groceries? Please exclude the percentage sign in your answer.'] = self.survey_df['What percent (%) of the time do you carpool when you get groceries? Please exclude the percentage sign in your answer.'].map(lambda x: x.rstrip('%'))
+
         # Change NaN values for certain questions to 'no'
         self.survey_df['Are you involved in any sustainability groups on campus? If so, which ones? (groups on campus: https://sustainability.umd.edu/get-involved/students/student-groups)'].fillna('no', inplace=True)
         self.survey_df['Have you worked on a project that is sustainability or carbon footprint related? If so, explain.'].fillna('no', inplace=True)
+
+        # Might need to standardize answers to question: 'Are you involved in any sustainability groups on campus?' 
+
+        # Might need to standardize answers to question: 'Have you worked on a project that is sustainability or carbon footprint related?'
+
+        # Might need to standardize answers to question: 'How many meals do you eat out for a week? Breakfast, lunch, and dinner each count as 1 meal each.'
+        # There is a '1/2' as entry which might cause problems
+
+        # Might need to standardize answers to question: 'On average, how many miles do you travel per week to do grocery shopping?'
 
         # # Fill in missing data in dataframe
         # with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
