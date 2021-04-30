@@ -33,6 +33,8 @@ Run:
 
 
 ## Execute
-Run:
+Go into 'processing' directory and run:
 
-    python3 processing/main.py
+    python3 main.py
+
+The formatted survey data will appear in the 'data' repository.
