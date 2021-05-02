@@ -1,38 +1,49 @@
 # Food Choices Data Story
+## Data Story Component
 
-Template for a single Idyll post.
+### Installation
+1. Install `idyll` globally by running:
 
-## Installation
+```shell
+npm i -g idyll
+```
+2. Then install dependencies by running:
+```shell
+npm install
+```
 
-- Make sure you have `idyll` installed (`npm i -g idyll`).
-- Clone this repo and run `npm install`.
+### Developing a post locally
 
-## Developing a post locally
+To start the project, go to the project root directory and run:
+```shell
+idyll
+```
 
-Run `idyll`.
-
-## Building a post for production
+<!-- ## Building a post for production
 
 Run `idyll build`. The output will appear in the top-level `build` folder. To change the output location, change the `output` option in `package.json`.
 
 ## Deploying
 
-Make sure your post has been built, then deploy the docs folder via any static hosting service.
+Make sure your post has been built, then deploy the docs folder via any static hosting service. -->
 
-## Dependencies
+### Dependencies
 
-You can install custom dependencies by running `npm install <package-name> --save`. Note that any collaborators will also need download the package locally by running `npm install` after pulling the changes.
+You can install custom dependencies by running:
+```shell
+npm install <package-name> --save
+```
 
-# Food Choices Processor
+## Data Processor Component
 
 The processor script for our data will be located in the 'processor' directory.
-## Installation
+### Installation
 Run:
 
     pip3 install -r processing/requirements.txt
 
 
-## Execute
+### Execute
 Go into 'processing' directory and run:
 
     python3 main.py
