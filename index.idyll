@@ -25,13 +25,15 @@ Configuration can be done via the `idyll` field in `package.json`.
 [var name:"state" value:0 /]
 // Our food data variable
 [data name:'foodData' source:'formatted-data.csv' /]
-
 [var name:"xAttr" value:"food" /]
 [var name:"yAttr" value:"count" /]
 [var name:"unit" value:"kgs" /]
-[BarD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit /]
+[var name:"range" value:25 /]
+[BarD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit range:range /]
 [button onClick:`unit = "lbs"`]Change to lbs[/button]
 [button onClick:`unit = "kgs"`]Change to kgs[/button]
+[Range value:range min:0 max:25 /]
+[Display value:range /]
 
 
 

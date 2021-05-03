@@ -5,6 +5,8 @@ const d3 = require('d3');
 const globalWidth = 600;
 const globalHeight = 500;
 
+
+// Bar graph code was adapted from: https://www.d3-graph-gallery.com/graph/barplot_button_data_hard.html
 class BarD3Component extends D3Component {
   render;
 
@@ -37,49 +39,83 @@ class BarD3Component extends D3Component {
     var yAxis = svg.append("g")
     .attr("class", "myYaxis");
 
-    this.render = (xAttr, yAttr, unit) => {
-      var data = this.updateData(props.data, unit);
-      // X axis
-      x.domain(data.map(function(d) { return d.food; }))
-      xAxis.transition().duration(1000).call(d3.axisBottom(x))
+    this.render = (props) => {
+      const xAttr = props.xAttr;
+      const yAttr = props.yAttr;
+      var data = this.updateData(props.data, props.unit, props.range);
+
+      // Update the X axis
+      x.domain(data.map(function(d) { return d.food; }));
+      xAxis.transition().duration(500).call(d3.axisBottom(x))
       .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", "rotate(-45)");
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
 
-
-      // Add Y axis
-      y.domain([0, d3.max(data, function(d) { return +d[yAttr] }) ]);
+      // Update the Y axis
+      y.domain([0, d3.max(data, function(d) { return d.count }) ]);
       yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
-      // variable u: map data to existing bars
-      var u = svg.selectAll("rect")
-        .data(data)
+      // Add tooltip
+      var tooltip = d3.select("body")
+      .append("div")
+      .style("visibility", "hidden")
+      .style("position", "absolute")
+      .style("border-style", "solid")
+      .style("border-radius", "25px")
+      .style("padding", "20px")
+      .style("width", "220px")
+      .style("height", "auto")
+      .style("background", "white");
 
-      // update bars
-      u.enter()
+      // Create the u variable
+      var u = svg.selectAll("rect")
+        .data(data);
+
+      var rects = u.enter()
         .append("rect")
-        .merge(u)
-        .transition()
+        .merge(u);
+
+      rects.transition()
         .duration(1000)
-          .attr("x", function(d) { return x(d[xAttr]); })
-          .attr("y", function(d) { return y(d[yAttr]); })
+          .attr("x", function(d) { return x(d.food); })
+          .attr("y", function(d) { return y(d.count); })
           .attr("width", x.bandwidth())
-          .attr("height", function(d) { return height - y(d[yAttr]); })
-          .attr("fill", "#69b3a2")
+          .attr("height", function(d) { return height - y(d.count); })
+          .attr("fill", "#69b3a2");
+
+      rects.on("mouseover", function(d) {		
+          return tooltip.html("Total Number of food: " + d.count)	
+            .style("visibility", "visible")
+              .style("left", (d3.event.pageX + 20) + "px")		
+              .style("top", (d3.event.pageY - 125) + "px");	
+          })
+        .on("mousemove", function(d){
+          return tooltip
+            .html("Total Number of food: " + d.count)
+            .style("visibility", "visible")
+            .style("left",(d3.event.pageX + 20) + "px")
+            .style("top", (d3.event.pageY - 125) + "px");
+        })					
+        .on("mouseout", function(d) {		
+          return tooltip.style("visibility", "hidden")
+        });
+
+      // If less group in the new dataset, I delete the ones not in use anymore
+      u.exit().remove();
     };
 
-    this.render(props.xAttr, props.yAttr, props.unit);
+    this.render(props);
     
   }
 
   update(props, oldProps) {
-    this.render(props.xAttr, props.yAttr, props.unit);
+    this.render(props);
   }
 
   // Unit type can either be 'lbs' or 'kgs'
-  updateData(data, unitType) {
+  updateData(data, unitType, range) {
     const mapped_foods = [
       "Beef / buffalo",
       "Lamb / goat",
@@ -133,7 +169,7 @@ class BarD3Component extends D3Component {
       foodElement["food"] = foodElement["food"].replace(/\(.*\)/, '');
     });
     final.sort((a,b) => (a.count > b.count) ? -1 : ((b.count > a.count) ? 1 : 0))
-    return final;
+    return final.slice(0, range);
   }
     
 }
