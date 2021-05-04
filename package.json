@@ -9,10 +9,11 @@
     "authorView": false
   },
   "dependencies": {
+    "bootstrap": "^4.6.0",
     "d3": "^4.0.0",
     "idyll": "^5.0.0",
     "idyll-d3-component": "^2.0.0",
-    "nivo": "^0.31.0",
+    "nivo": "^0.7.0",
     "react-vis": "^1.11.7",
     "recharts": "^2.0.9"
   },

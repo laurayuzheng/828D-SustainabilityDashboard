@@ -30,12 +30,19 @@ Configuration can be done via the `idyll` field in `package.json`.
 [var name:"unit" value:"kgs" /]
 [var name:"range" value:25 /]
 [BarD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit range:range /]
+// [BarControllerComponent /]
+[div style:`{width:'auto', margin: 'auto'}`]
+[div className:'bar-controls']
 [button onClick:`unit = "lbs"`]Change to lbs[/button]
+[/div]
+[div className:'bar-controls']
 [button onClick:`unit = "kgs"`]Change to kgs[/button]
+[/div]
+[div className:'bar-controls']
 [Range value:range min:0 max:25 /]
 [Display value:range /]
-
-
+[/div]
+[/div]
 
 // [var name:"myVar" value:10 /]
 
