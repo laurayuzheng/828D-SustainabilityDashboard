@@ -7,12 +7,14 @@ const globalHeight = 500;
 
 
 // Bar graph code was adapted from: https://www.d3-graph-gallery.com/graph/barplot_button_data_hard.html
-class BarD3Component extends D3Component {
+class BoxplotD3Component extends D3Component {
   render;
 
   initialize(node, props) {
     console.log(props.data);
-    node.style.height = globalHeight+50;
+    // node.style.height = globalHeight+50;
+    const data = this.updateData(props.data, "kgs");
+    console.log(data);
 
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -30,7 +32,7 @@ class BarD3Component extends D3Component {
      // Show the X scale
      var x = d3.scaleBand()
      .range([ 0, width ])
-     .domain(["setosa", "versicolor", "virginica"])
+     .domain(data.map(function(d) { return d.food; }))
      .paddingInner(1)
      .paddingOuter(.5)
      svg.append("g")
@@ -39,7 +41,7 @@ class BarD3Component extends D3Component {
 
      // Show the Y scale
      var y = d3.scaleLinear()
-     .domain([0,20])
+     .domain([-1,1])
      .range([height, 0])
      svg.append("g").call(d3.axisLeft(y))
 
@@ -47,14 +49,14 @@ class BarD3Component extends D3Component {
       
         // Compute quartiles, median, inter quantile range min and max --> these info are then used to draw the box.
         var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-        .key(function(d) { return d.Species;})
+        .key(function(d) { return d.food;})
         .rollup(function(d) {
-        q1 = d3.quantile(d.map(function(g) { return g.Sepal_Length;}).sort(d3.ascending),.25)
-        median = d3.quantile(d.map(function(g) { return g.Sepal_Length;}).sort(d3.ascending),.5)
-        q3 = d3.quantile(d.map(function(g) { return g.Sepal_Length;}).sort(d3.ascending),.75)
-        interQuantileRange = q3 - q1
-        min = q1 - 1.5 * interQuantileRange
-        max = q3 + 1.5 * interQuantileRange
+        var q1 = d3.quantile(d.map(function(g) { return g.count;}).sort(d3.ascending),.25)
+        var median = d3.quantile(d.map(function(g) { return g.count;}).sort(d3.ascending),.5)
+        var q3 = d3.quantile(d.map(function(g) { return g.count;}).sort(d3.ascending),.75)
+        var interQuantileRange = q3 - q1
+        var min = q1 - 1.5 * interQuantileRange
+        var max = q3 + 1.5 * interQuantileRange
         return({q1: q1, median: median, q3: q3, interQuantileRange: interQuantileRange, min: min, max: max})
         })
         .entries(data)
@@ -73,7 +75,7 @@ class BarD3Component extends D3Component {
         .style("width", 40)
 
         // rectangle for the main box
-        var boxWidth = 100
+        var boxWidth = 10
         svg
         .selectAll("boxes")
         .data(sumstat)
@@ -106,9 +108,9 @@ class BarD3Component extends D3Component {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", function(d){return(x(d.Species) - jitterWidth/2 + Math.random()*jitterWidth )})
-        .attr("cy", function(d){return(y(d.Sepal_Length))})
-        .attr("r", 4)
+        .attr("cx", function(d){return(x(d.food) - jitterWidth/2 + Math.random()*jitterWidth )})
+        .attr("cy", function(d){return(y(d.count))})
+        .attr("r", 1)
         .style("fill", "white")
         .attr("stroke", "black")
 
@@ -123,7 +125,7 @@ class BarD3Component extends D3Component {
   }
 
   // Unit type can either be 'lbs' or 'kgs'
-  updateData(data, unitType, range) {
+  updateData(data, unitType) {
     const mapped_foods = [
       "Beef / buffalo",
       "Lamb / goat",
@@ -152,32 +154,27 @@ class BarD3Component extends D3Component {
       "Sugar" 
     ];
     var final = [];
-    mapped_foods.forEach((food) => {
-      final.push({ food, count: 0 });
-    });
-
-    final.forEach((foodElement) => {
-      data.forEach((element) => {
+    data.forEach((element) => {
         const units = element["What unit of weight do you prefer to answer with? This will be the unit of weight corresponding to the amount of food you purchase per week."];
-        var convertedCount = element[foodElement["food"]];
-        if (units === "Pounds (lbs)") {
-          // Units are in lbs but we want kgs
-          if (unitType === "kgs") {
-            convertedCount = element[foodElement["food"]] * 0.4536
-          }
-        } else {
-          // Units are in kgs but we want lbs
-          if (unitType === "lbs") {
-            convertedCount = element[foodElement["food"]] * 2.2046
-          } 
-        }
-
-        foodElement["count"] += convertedCount;
-      });
-      foodElement["food"] = foodElement["food"].replace(/\(.*\)/, '');
+        mapped_foods.forEach((foodName) => {
+            var convertedCount = element[foodName];
+            if (units === "Pounds (lbs)") {
+                // Units are in lbs but we want kgs
+                if (unitType === "kgs") {
+                    convertedCount *= 0.4536
+                }
+            } else {
+                // Units are in kgs but we want lbs
+                if (unitType === "lbs") {
+                    convertedCount *= 2.2046
+                } 
+            }
+            foodName = foodName.replace(/\(.*\)/, '');
+            final.push({food: foodName, count: convertedCount});
+        });
     });
-    final.sort((a,b) => (a.count > b.count) ? -1 : ((b.count > a.count) ? 1 : 0))
-    return final.slice(0, range);
+    // final.sort((a,b) => (a.count > b.count) ? -1 : ((b.count > a.count) ? 1 : 0))
+    return final;
   }
     
 }

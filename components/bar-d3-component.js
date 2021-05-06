@@ -11,7 +11,6 @@ class BarD3Component extends D3Component {
   render;
 
   initialize(node, props) {
-    console.log(props.data);
     node.style.height = globalHeight+50;
 
     var margin = {top: 30, right: 30, bottom: 90, left: 60};

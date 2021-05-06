@@ -30,6 +30,7 @@ Configuration can be done via the `idyll` field in `package.json`.
 [var name:"unit" value:"kgs" /]
 [var name:"range" value:25 /]
 [BarD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit range:range /]
+[BoxplotD3Component data:foodData /]
 // [BarControllerComponent /]
 [div style:`{width:'auto', margin: 'auto'}`]
 [div className:'bar-controls']
