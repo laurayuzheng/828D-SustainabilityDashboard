@@ -39,5 +39,16 @@
 /* Project styles */
 .bar-controls {
   display: inline-block;
-  margin-right: 20px;
+  margin-right: 10px;
+}
+
+.bar-controls-labels {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

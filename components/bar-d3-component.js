@@ -11,19 +11,17 @@ class BarD3Component extends D3Component {
   render;
 
   initialize(node, props) {
-    node.style.height = globalHeight+50;
-
-    var margin = {top: 30, right: 30, bottom: 90, left: 60};
+    var margin = {top: 10, right: 30, bottom: 90, left: 40};
     var width = globalWidth - margin.left - margin.right;
     var height = globalHeight - margin.top - margin.bottom;
 
-    const svg = (this.svg = d3.select(node)
+    const svg = d3.select(node)
     .append('svg')
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")"));
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
     // Initialize the X axis
     var x = d3.scaleBand()
@@ -38,10 +36,28 @@ class BarD3Component extends D3Component {
     var yAxis = svg.append("g")
     .attr("class", "myYaxis");
 
+    // Add X axis label
+    var xLabel = svg.append("text")
+    .attr("id", "x-label")
+    .attr("text-anchor", "end")
+    .attr("x", width)
+    .attr("y", height - 6)
+    .text("Food");
+
+    // Add Y axis label
+    var yLabel = svg.append("text")
+    .attr("id", "y-label")
+    .attr("text-anchor", "end")
+    .attr("y", 6)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text(`Total ${props.unit} of Food`);
+
     this.render = (props) => {
-      const xAttr = props.xAttr;
-      const yAttr = props.yAttr;
-      var data = this.updateData(props.data, props.unit, props.range);
+      var data = this.updateData(props);
+
+      // Update Y label if there is a change of units
+      yLabel.transition().duration(400).text(`Total ${props.unit} of Food`);
 
       // Update the X axis
       x.domain(data.map(function(d) { return d.food; }));
@@ -82,7 +98,7 @@ class BarD3Component extends D3Component {
           .attr("y", function(d) { return y(d.count); })
           .attr("width", x.bandwidth())
           .attr("height", function(d) { return height - y(d.count); })
-          .attr("fill", "#69b3a2");
+          .attr("fill", "#5F9EA0");
 
       rects.on("mouseover", function(d) {		
           return tooltip.html("Total Number of food: " + d.count)	
@@ -114,7 +130,12 @@ class BarD3Component extends D3Component {
   }
 
   // Unit type can either be 'lbs' or 'kgs'
-  updateData(data, unitType, range) {
+  updateData(props) {
+    const data = props.data
+    const sortby = props.sortby;
+    const orderby = props.orderby;
+    const unit = props.unit;
+    const range = props.range;
     const mapped_foods = [
       "Beef / buffalo",
       "Lamb / goat",
@@ -153,12 +174,12 @@ class BarD3Component extends D3Component {
         var convertedCount = element[foodElement["food"]];
         if (units === "Pounds (lbs)") {
           // Units are in lbs but we want kgs
-          if (unitType === "kgs") {
+          if (unit === "kgs") {
             convertedCount = element[foodElement["food"]] * 0.4536
           }
         } else {
           // Units are in kgs but we want lbs
-          if (unitType === "lbs") {
+          if (unit === "lbs") {
             convertedCount = element[foodElement["food"]] * 2.2046
           } 
         }
@@ -167,7 +188,12 @@ class BarD3Component extends D3Component {
       });
       foodElement["food"] = foodElement["food"].replace(/\(.*\)/, '');
     });
-    final.sort((a,b) => (a.count > b.count) ? -1 : ((b.count > a.count) ? 1 : 0))
+
+    if (orderby === "ascending") {
+      final.sort((a,b) => (a[sortby] > b[sortby]) ? 1 : ((b[sortby] > a[sortby]) ? -1 : 0))
+    } else {
+      final.sort((a,b) => (a[sortby] > b[sortby]) ? -1 : ((b[sortby] > a[sortby]) ? 1 : 0))
+    }
     return final.slice(0, range);
   }
     
