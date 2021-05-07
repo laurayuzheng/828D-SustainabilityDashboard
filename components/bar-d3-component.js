@@ -11,7 +11,7 @@ class BarD3Component extends D3Component {
   render;
 
   initialize(node, props) {
-    var margin = {top: 10, right: 30, bottom: 90, left: 40};
+    var margin = {top: 30, right: 30, bottom: 90, left: 40};
     var width = globalWidth - margin.left - margin.right;
     var height = globalHeight - margin.top - margin.bottom;
 
@@ -38,20 +38,34 @@ class BarD3Component extends D3Component {
 
     // Add X axis label
     var xLabel = svg.append("text")
-    .attr("id", "x-label")
+    .attr("class", "axis-label")
     .attr("text-anchor", "end")
-    .attr("x", width)
-    .attr("y", height - 6)
+    .attr("x", width/2+15)
+    .attr("y", height + 75)
+    .attr("font-size", "12px")
     .text("Food");
 
     // Add Y axis label
     var yLabel = svg.append("text")
-    .attr("id", "y-label")
+    .attr("class", "axis-label")
     .attr("text-anchor", "end")
-    .attr("y", 6)
-    .attr("dy", ".75em")
-    .attr("transform", "rotate(-90)")
+    .attr("x", -height/2+50)
+    .attr("dy", "-2.5em")
+    .attr("transform", `rotate(-90)`)
+    .attr("font-size", "12px")
     .text(`Total ${props.unit} of Food`);
+
+    // Bold axes labels
+    svg.selectAll('.axis-label').style("font-weight", "bold");
+
+    // Add bar graph title
+    svg.append("text")
+    .attr("x", (width / 2))             
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")  
+    .style("font-size", "16px") 
+    .style("font-weight", "bold")  
+    .text("Total Food Consumption by Category vs Food");
 
     this.render = (props) => {
       var data = this.updateData(props);
@@ -60,13 +74,13 @@ class BarD3Component extends D3Component {
       yLabel.transition().duration(400).text(`Total ${props.unit} of Food`);
 
       // Update the X axis
-      x.domain(data.map(function(d) { return d.food; }));
-      xAxis.transition().duration(500).call(d3.axisBottom(x))
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-45)");
+      x.domain(data.map(function(d) { return d.food }));
+      // xAxis.transition().duration(500).call(d3.axisBottom(x))
+      // .selectAll("text")
+      // .style("text-anchor", "end")
+      // .attr("dx", "-.8em")
+      // .attr("dy", ".15em")
+      // .attr("transform", "rotate(-45)");
 
       // Update the Y axis
       y.domain([0, d3.max(data, function(d) { return d.count }) ]);
@@ -101,14 +115,14 @@ class BarD3Component extends D3Component {
           .attr("fill", "#5F9EA0");
 
       rects.on("mouseover", function(d) {		
-          return tooltip.html("Total Number of food: " + d.count)	
+          return tooltip.html(`${d.food}: ~` + d.count.toFixed(3) + ` ${props.unit}`)	
             .style("visibility", "visible")
               .style("left", (d3.event.pageX + 20) + "px")		
               .style("top", (d3.event.pageY - 125) + "px");	
           })
         .on("mousemove", function(d){
           return tooltip
-            .html("Total Number of food: " + d.count)
+            .html(`${d.food}: ~` + d.count.toFixed(3) + ` ${props.unit}`)
             .style("visibility", "visible")
             .style("left",(d3.event.pageX + 20) + "px")
             .style("top", (d3.event.pageY - 125) + "px");
@@ -116,6 +130,21 @@ class BarD3Component extends D3Component {
         .on("mouseout", function(d) {		
           return tooltip.style("visibility", "hidden")
         });
+
+        x.domain(data.map(function(d) {
+          var arr = d.food.split(" ");
+          var final = arr[0]
+          if (arr[1] != null && arr[1] !== '/') {
+            final += (" " + arr[1])
+          }
+          return final;
+        }));
+        xAxis.transition().duration(500).call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)");
 
       // If less group in the new dataset, I delete the ones not in use anymore
       u.exit().remove();

@@ -11,16 +11,11 @@
   color:"#ffffff"
    /]
 
-## Introduction
+## Total Units of Foods
 
-This is an Idyll scrolly-telling post. It is generated via
-the file `index.idyll`. To compile this post using
-idyll, run the command `idyll` inside of this directory.
-
-Idyll posts are designed to support interaction and
-data-driven graphics.
-
-Configuration can be done via the `idyll` field in `package.json`.
+In our survey, we asked about certain amounts of foods that UMD students would purchase weekly. Below are our results.
+Feel free to explore the visualization by varying the parameters and brushing the bar chart. Hover
+a bar to view the actual total values.  
 
 [var name:"state" value:0 /]
 // Our food data variable
@@ -31,6 +26,11 @@ Configuration can be done via the `idyll` field in `package.json`.
 [BarD3Component data:foodData unit:unit sortby:sortby orderby:orderby /]
 // [BoxplotD3Component data:foodData /]
 [BarControllerComponent unit:unit sortby:sortby orderby:orderby /]
+
+[br /]
+From the bar graph above, we can see that the top foods consumption include milk, eggs, and poultry. 
+Another observation is that a lot of the surveyed users do not use a lot of different oils. Canola and 
+olive oil are the most popular.
 
 // [var name:"myVar" value:10 /]
 
