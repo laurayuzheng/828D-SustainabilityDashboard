@@ -68,44 +68,22 @@ class BarD3Component extends D3Component {
     .style("font-weight", "bold")  
     .text("Total Food Consumption by Category vs Food");
 
-    var idleTimeout
-    var idled = () => { idleTimeout = null; }
-
-    // var updateChart = () => {
-    //   var extent = d3.event.selection
-    //   console.log(extent)
-    //   // If no selection, back to initial coordinate. Otherwise, update X axis domain
-    //   if(!extent){
-    //     if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
-    //     x.domain(props.data.map(function(d) { return d.food }))
-    //   }else{
-    //     x.domain(props.data.map(function(d) { return d.food }))
-    //     // svg.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
-    //   }
-  
-    //   // Update axis and circle position
-    //   xAxis.transition().duration(1000).call(d3.axisBottom(x))
-    //   // Update the Y axis
-    //   y.domain([0, d3.max(props.data, function(d) { return d.count }) ]);
-    //   yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
-    //   var u = svg.selectAll("rect")
-    //   .data(props.data);
-
-    //   var rects = u.enter()
-    //     .append("rect")
-    //     .merge(u);
-
-    //   rects.transition()
-    //     .duration(1000)
-    //       .attr("x", function(d) { return x(d.food); })
-    //       .attr("y", function(d) { return y(d.count); })
-    //       .attr("width", x.bandwidth())
-    //       .attr("height", function(d) { return height - y(d.count); })
-    //       .attr("fill", "#5F9EA0");
-    // };
+     // Add tooltip
+     var tooltip = d3.select("body")
+     .append("div")
+     .style("visibility", "hidden")
+     .style("position", "absolute")
+     .style("border-style", "solid")
+     .style("border-radius", "25px")
+     .style("padding", "20px")
+     .style("width", "220px")
+     .style("height", "auto")
+     .style("background", "white");
 
     this.render = (props) => {
+      // Remove tooltip if necessary
+      tooltip.style("visibility", "hidden")
+
       var data = this.updateData(props);
 
       // Update Y label if there is a change of units
@@ -117,18 +95,6 @@ class BarD3Component extends D3Component {
       // Update the Y axis
       y.domain([0, d3.max(data, function(d) { return d.count }) ]);
       yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
-      // Add tooltip
-      var tooltip = d3.select("body")
-      .append("div")
-      .style("visibility", "hidden")
-      .style("position", "absolute")
-      .style("border-style", "solid")
-      .style("border-radius", "25px")
-      .style("padding", "20px")
-      .style("width", "220px")
-      .style("height", "auto")
-      .style("background", "white");
 
       // Create the u variable
       var u = svg.selectAll("rect")
@@ -167,8 +133,12 @@ class BarD3Component extends D3Component {
       x.domain(data.map(function(d) {
         var arr = d.food.split(" ");
         var final = arr[0]
-        if (arr[1] != null && arr[1] !== '/') {
-          final += (" " + arr[1])
+        if (arr[1] != null) {
+          if (arr[1] !== '/') {
+            final += (" " + arr[1])
+          } else {
+            final += "..."
+          }
         }
         return final;
       }));
@@ -184,14 +154,6 @@ class BarD3Component extends D3Component {
     };
 
     this.render(props);
-
-    // // Add brushing
-    // var brush = d3.brushX()                     // Add the brush feature using the d3.brush function
-    // .extent([[0,75], [width,height]])
-    // .on("end", updateChart);       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
-  
-    // d3.select("#main_graph")
-    // .call(brush);
     
   }
 
@@ -234,9 +196,9 @@ class BarD3Component extends D3Component {
       "Sugar" 
     ];
     var final = [];
-    var re = new RegExp('^' + props.search + '.*$');
+    var re = new RegExp('^' + props.search.toLowerCase() + '.*$');
     mapped_foods.forEach((food) => {
-      if (food.match(re)) {
+      if (food.toLowerCase().match(re)) {
         final.push({ food, count: 0 });
       }
     });
