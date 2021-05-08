@@ -186,12 +186,12 @@ class ScatterplotD3Component extends D3Component {
         if (units === "Pounds (lbs)") {
           // Units are in lbs but we want kgs
           if (unitType === "kgs") {
-            element[foodElement] = element[foodElement] * 0.4536
+            element[foodElement] = element[foodElement] * 0.4536;
           }
         } else {
           // Units are in kgs but we want lbs
           if (unitType === "lbs") {
-            element[foodElement] = element[foodElement] * 2.2046
+            element[foodElement] = element[foodElement] * 2.2046;
           } 
         }
       });
