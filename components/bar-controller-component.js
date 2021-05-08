@@ -1,3 +1,4 @@
+// const Slider = require('rc-slider');
 const React = require('react');
 
 class BarControllerComponent extends React.Component {
@@ -20,6 +21,24 @@ class BarControllerComponent extends React.Component {
         })
     }
 
+    // changeLowerBound(e) {
+    //     this.props.updateProps({
+    //         upperBound: e.target.value
+    //     })
+    // }
+
+    // changeUpperBound(e) {
+    //     this.props.updateProps({
+    //         upperBound: e.target.value
+    //     })
+    // }
+
+    changeSearch(e) {
+        this.props.updateProps({
+            search: e.target.value
+        })
+    }
+
     render() {
         return (
             <div className="controls">
@@ -38,6 +57,12 @@ class BarControllerComponent extends React.Component {
                     <option value="ascending">Ascending</option>
                     <option value="descending">Descending</option>
                 </select>
+                {/* <label className="bar-controls-labels" htmlFor="lower-bound">Lower:</label>
+                <input className="bar-controls" id="lower-bound" onChange={this.changeLowerBound.bind(this)} type="text"></input>
+                <label className="bar-controls-labels" htmlFor="upper-bound">Upper:</label>
+                <input className="bar-controls" id="upper-bound" onChange={this.changeUpperBound.bind(this)} type="text"></input> */}
+                <label className="bar-controls-labels" htmlFor="search">Search:</label>
+                <input className="bar-controls" id="search" onChange={this.changeSearch.bind(this)} type="text"></input>
             </div>
         );
     }
