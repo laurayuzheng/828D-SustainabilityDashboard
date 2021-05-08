@@ -42,6 +42,10 @@
   margin-right: 10px;
 }
 
+.bar-controls-bounds {
+  width: 100px;
+}
+
 .bar-controls-labels {
   display: inline-block;
   margin-right: 5px;

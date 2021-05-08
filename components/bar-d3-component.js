@@ -224,6 +224,8 @@ class BarD3Component extends D3Component {
       foodElement["food"] = foodElement["food"].replace(/\(.*\)/, '');
     });
 
+    final = final.filter((element) => (element["count"] >= props.lowerBound && element["count"] <= props.upperBound) );
+
     if (orderby === "ascending") {
       final.sort((a,b) => (a[sortby] > b[sortby]) ? 1 : ((b[sortby] > a[sortby]) ? -1 : 0))
     } else {

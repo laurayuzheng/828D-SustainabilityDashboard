@@ -21,17 +21,17 @@ class BarControllerComponent extends React.Component {
         })
     }
 
-    // changeLowerBound(e) {
-    //     this.props.updateProps({
-    //         upperBound: e.target.value
-    //     })
-    // }
+    changeLowerBound(e) {
+        this.props.updateProps({
+            lowerBound: e.target.value
+        })
+    }
 
-    // changeUpperBound(e) {
-    //     this.props.updateProps({
-    //         upperBound: e.target.value
-    //     })
-    // }
+    changeUpperBound(e) {
+        this.props.updateProps({
+            upperBound: e.target.value
+        })
+    }
 
     changeSearch(e) {
         this.props.updateProps({
@@ -57,10 +57,10 @@ class BarControllerComponent extends React.Component {
                     <option value="ascending">Ascending</option>
                     <option value="descending">Descending</option>
                 </select>
-                {/* <label className="bar-controls-labels" htmlFor="lower-bound">Lower:</label>
-                <input className="bar-controls" id="lower-bound" onChange={this.changeLowerBound.bind(this)} type="text"></input>
+                <label className="bar-controls-labels" htmlFor="lower-bound">Lower:</label>
+                <input className="bar-controls-bounds" id="lower-bound" onChange={this.changeLowerBound.bind(this)} type="text" value={this.props.lowerBound}></input>
                 <label className="bar-controls-labels" htmlFor="upper-bound">Upper:</label>
-                <input className="bar-controls" id="upper-bound" onChange={this.changeUpperBound.bind(this)} type="text"></input> */}
+                <input className="bar-controls-bounds" id="upper-bound" onChange={this.changeUpperBound.bind(this)} type="text" value={this.props.upperBound}></input>
                 <label className="bar-controls-labels" htmlFor="search">Search:</label>
                 <input className="bar-controls" id="search" onChange={this.changeSearch.bind(this)} type="text"></input>
             </div>

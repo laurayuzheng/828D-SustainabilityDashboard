@@ -24,14 +24,11 @@ a bar to view the actual total values.
 [var name:"sortby" value:"count" /]
 [var name:"orderby" value:"descending" /]
 [var name:"search" value:"" /]
-[BarD3Component data:foodData unit:unit sortby:sortby orderby:orderby search:search/]
-// [BoxplotD3Component data:foodData /]
-[BarControllerComponent unit:unit sortby:sortby orderby:orderby search:search/]
-
-// [Range value:upperBound min:0 max:100 /]
-// [Display value:upperBound /]
-// [Range value:myVar min:0 max: /]
-// [Display value:myVar /]
+[var name:"lowerBound" value:"0" /]
+[var name:"upperBound" value:"50" /]
+[BarD3Component data:foodData unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
+// [BoxplotD3Component data:foodData selected:selected/]
+[BarControllerComponent unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
 
 [br /]
 From the bar graph above, we can see that the top foods consumption include milk, eggs, and poultry. 
