@@ -110,7 +110,7 @@ class BarD3Component extends D3Component {
           .attr("y", function(d) { return y(d.count); })
           .attr("width", x.bandwidth())
           .attr("height", function(d) { return height - y(d.count); })
-          .attr("fill", "#5F9EA0");
+          .attr("fill", "#2a6592");
 
       rects.on("mouseover", function(d) {		
           return tooltip.html(`${d.food}: ~` + d.count.toFixed(3) + ` ${props.unit}`)	
