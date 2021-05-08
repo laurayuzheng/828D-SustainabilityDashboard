@@ -4,8 +4,21 @@ const React = require('react');
 class BarControllerComponent extends React.Component {
 
     changeUnits(e) {
+        var newLower = 1;
+        var newUpper = 1;
+        if (e.target.value === "kgs") {
+            // Units are in lbs but we want kgs
+            newLower = this.props.lowerBound * 0.4536
+            newUpper = this.props.upperBound * 0.4536
+        } else {
+            // Units are in kgs but we want lbs
+            newLower = this.props.lowerBound * 2.2046
+            newUpper = this.props.upperBound * 2.2046
+        }
         this.props.updateProps({
-            unit: e.target.value
+            unit: e.target.value,
+            lowerBound: newLower.toFixed(3),
+            upperBound: newUpper.toFixed(3)
         })
     }
 

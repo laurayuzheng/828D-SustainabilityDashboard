@@ -14,8 +14,8 @@
 ## Total Units of Foods
 
 In our survey, we asked about certain amounts of foods that UMD students would purchase weekly. Below are our results.
-Feel free to explore the visualization by varying the parameters and brushing the bar chart. Hover
-a bar to view the actual total values.  
+Feel free to explore the visualization by varying the parameters and hover over different bars to see the 
+total values.
 
 [var name:"state" value:0 /]
 // Our food data variable
@@ -29,6 +29,8 @@ a bar to view the actual total values.
 [BarD3Component data:foodData unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
 // [BoxplotD3Component data:foodData selected:selected/]
 [BarControllerComponent unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
+[button onClick:`unit="kgs"; sortby="count"; orderby="descending"; search=""; lowerBound="0"; upperBound="50"`]Reset[/button]
+
 
 [br /]
 From the bar graph above, we can see that the top foods consumption include milk, eggs, and poultry. 
