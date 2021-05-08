@@ -62,7 +62,7 @@ class BarControllerComponent extends React.Component {
                 </select>
                 <label className="bar-controls-labels" htmlFor="sortby">Sort By:</label>
                 <select className="bar-controls" id="sortby" onChange={this.changeSortBy.bind(this)} value={this.props.sortby}>
-                    <option value="count">Count</option>
+                    <option value="count">Total Units</option>
                     <option value="food">Food Name</option>
                 </select>
                 <label className="bar-controls-labels" htmlFor="orderby">Order By:</label>

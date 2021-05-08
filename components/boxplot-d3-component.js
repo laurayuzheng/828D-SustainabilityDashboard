@@ -11,10 +11,10 @@ class BoxplotD3Component extends D3Component {
   render;
 
   initialize(node, props) {
-    console.log(props.data);
+    // console.log(props.data);
     // node.style.height = globalHeight+50;
-    const data = this.updateData(props.data, "kgs");
-    console.log(data);
+    const data = this.updateData(props);
+    // console.log(data);
 
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -25,7 +25,7 @@ class BoxplotD3Component extends D3Component {
     .append('svg')
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")"));
 
@@ -41,7 +41,7 @@ class BoxplotD3Component extends D3Component {
 
      // Show the Y scale
      var y = d3.scaleLinear()
-     .domain([-1,1])
+     .domain([0,3])
      .range([height, 0])
      svg.append("g").call(d3.axisLeft(y))
 
@@ -110,7 +110,7 @@ class BoxplotD3Component extends D3Component {
         .append("circle")
         .attr("cx", function(d){return(x(d.food) - jitterWidth/2 + Math.random()*jitterWidth )})
         .attr("cy", function(d){return(y(d.count))})
-        .attr("r", 1)
+        .attr("r", 5)
         .style("fill", "white")
         .attr("stroke", "black")
 
@@ -125,55 +125,26 @@ class BoxplotD3Component extends D3Component {
   }
 
   // Unit type can either be 'lbs' or 'kgs'
-  updateData(data, unitType) {
-    const mapped_foods = [
-      "Beef / buffalo",
-      "Lamb / goat",
-      "Pork",
-      "Poultry (chicken, turkey, or any other bird meats)", 
-      "Fish (finfish)", 
-      "Crustaceans (e.g., shrimp, prawns, crabs, lobster)", 
-      "Mollusks (e.g., clams, oysters, squid, octopus)", 
-      "Butter",
-      "Cheese",
-      "Ice cream", 
-      "Cream", 
-      "Milk (cow's milk)",
-      "Yogurt", 
-      "Eggs",
-      "Potatoes",
-      "Cassava / Other roots", 
-      "Soybean oil", 
-      "Palm oil", 
-      "Sunflower oil",
-      "Rapeseed / canola oil", 
-      "Olive oil", 
-      "Beer", 
-      "Wine", 
-      "Coffee (Ground or whole bean)", 
-      "Sugar" 
-    ];
+  updateData(props) {
     var final = [];
-    data.forEach((element) => {
+    props.data.forEach((element) => {
         const units = element["What unit of weight do you prefer to answer with? This will be the unit of weight corresponding to the amount of food you purchase per week."];
-        mapped_foods.forEach((foodName) => {
-            var convertedCount = element[foodName];
-            if (units === "Pounds (lbs)") {
-                // Units are in lbs but we want kgs
-                if (unitType === "kgs") {
-                    convertedCount *= 0.4536
-                }
-            } else {
-                // Units are in kgs but we want lbs
-                if (unitType === "lbs") {
-                    convertedCount *= 2.2046
-                } 
+        var convertedCount = element[props.selected];
+        if (units === "Pounds (lbs)") {
+            // Units are in lbs but we want kgs
+            if (props.unitType === "kgs") {
+                convertedCount *= 0.4536
             }
-            foodName = foodName.replace(/\(.*\)/, '');
-            final.push({food: foodName, count: convertedCount});
-        });
+        } else {
+            // Units are in kgs but we want lbs
+            if (props.unitType === "lbs") {
+                convertedCount *= 2.2046
+            } 
+        }
+        const foodName = props.selected.replace(/\(.*\)/, '');
+        final.push({food: foodName, count: convertedCount});
     });
-    // final.sort((a,b) => (a.count > b.count) ? -1 : ((b.count > a.count) ? 1 : 0))
+
     return final;
   }
     
