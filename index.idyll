@@ -11,7 +11,6 @@
   color:"#ffffff"
    /]
 
-
 // Our food data variable
 [data name:'foodData' source:'formatted-data.csv' /]
 
@@ -47,3 +46,122 @@ total values.
 From the bar graph above, we can see that the top foods consumption include milk, eggs, and poultry. 
 Another observation is that a lot of the surveyed users do not use a lot of different oils. Canola and 
 olive oil are the most popular.
+
+## Eating Out
+
+-insert paragraph about eating out and it's effects on sustainability-
+
+
+
+We asked participants to describe the types of food they would most likely buy when eating out.
+
+[IdyllVegaLite data: foodEatOutData spec:`{
+  "width": "container",
+  "height": 200,
+  "data": {
+    "values": [
+      {"category": "Fast Food", "count": 6},
+      {"category": "Pizza", "count": 5},
+      {"category": "Asian", "count": 3},
+      {"category": "American", "count": 2},
+      {"category": "Varied Takeout", "count": 2},
+      {"category": "Mexican", "count": 1},
+      {"category": "Snacks", "count": 1}
+    ]
+  },
+  "encoding": {
+    "y": {"field": "category", "type": "nominal", "sort": "-x", "title": "Food"},
+    "x": {"field": "count", "type": "quantitative", "title": "Count"}
+  },
+  "layer": [{
+    "mark": "bar",
+    "encoding": {
+      "color": {
+        "field": "count",
+        "type": "quantitative",
+        "title": "Number of People"
+      }
+    }
+  }, {
+    "mark": {
+      "type": "text",
+      "align": "right",
+      "xOffset": -4,
+      "aria": false
+    },
+    "encoding": {
+      "text": {"field": "count", "type": "quantitative"},
+      "color": {
+        "condition": {
+          "test": {"field": "count", "gt": 3},
+          "value": "white"
+        },
+        "value": "black"
+      }
+    }
+  }]
+}` /]
+
+We also asked participants to describe the beverages they would most likely buy when eating out.
+
+[IdyllVegaLite data: drinkEatOutData spec:`{
+  "width": "container",
+  "height": 200,
+  "data": {
+    "values": [
+      {"category": "Coffee", "count": 4},
+      {"category": "Milk tea", "count": 2},
+      {"category": "Bubble tea", "count": 1},
+      {"category": "Smoothie", "count": 1},
+      {"category": "Soda", "count": 1}
+    ]
+  },
+  "encoding": {
+    "y": {"field": "category", "type": "nominal", "sort": "-x", "title": "Drink"},
+    "x": {"field": "count", "type": "quantitative", "title": "Count"}
+  },
+  "layer": [{
+    "mark": "bar",
+    "encoding": {
+      "color": {
+        "field": "count",
+        "type": "quantitative",
+        "title": "Number of People"
+      }
+    }
+  }, {
+    "mark": {
+      "type": "text",
+      "align": "right",
+      "xOffset": -4,
+      "aria": false
+    },
+    "encoding": {
+      "text": {"field": "count", "type": "quantitative"},
+      "color": {
+        "condition": {
+          "test": {"field": "count", "gt": 2},
+          "value": "white"
+        },
+        "value": "black"
+      }
+    }
+  }]
+}` /]
+
+// Survey data
+[data name:'foodData' source:'formatted-data.csv' /]
+
+// Sustainability data
+[data name:'sustainData' source:'sustainable-choices.csv' /]
+
+// Eating out food data
+[data name:'eatingOutFoodData' source:'eating-out-food.csv' /]
+
+// Eating out drink data
+[data name:'eatingOutDrinkData' source:'eating-out-drink.csv' /]
+
+//[Table data: foodData /]
+//[Table data: sustainData /]
+//[Table data: eatingOutFoodData /]
+//[Table data: eatingOutDrinkData /]
