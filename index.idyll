@@ -172,8 +172,8 @@ We also asked participants to describe the beverages they would most likely buy 
 ## Laura's Code
 [var name:"xAttr" value:"Pork" /]
 [var name:"yAttr" value:"Potatoes" /]
-[var name:"unit" value:"lbs" /]
-[ScatterplotD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit /]
+[var name:"lauraUnit" value:"lbs" /]
+[ScatterplotD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
 
 [div style:`{width:'auto', margin: 'auto'}`]
 //[div className:'bar-controls']
