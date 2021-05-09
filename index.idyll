@@ -181,3 +181,17 @@ We also asked participants to describe the beverages they would most likely buy 
 //[button onClick:`unit = "kgs"`]Change to kgs[/button]
 //[/div]
 [/div]
+
+// Ananth's Code
+// Our food data variable
+[data name:'foodData' source:'formatted-data.csv' /]
+
+// Dropdown bar to delect which transportation method to visualize in histogram
+[var name:"selectVal" value:"All" /]
+[Select value:selectVal options:`["All", "Bike", "Car", "Carpool", "Delivery", "Public Transportation", "Walking"]`  /]
+
+// Histogram of how far people travel to buy groceries
+[HistogramComponent data:foodData method:selectVal/]
+
+
+[br/]
