@@ -47,6 +47,7 @@ From the bar graph above, we can see that the top foods consumption include milk
 Another observation is that a lot of the surveyed users do not use a lot of different oils. Canola and 
 olive oil are the most popular.
 
+// Diana's Code
 ## Eating Out
 
 -insert paragraph about eating out and it's effects on sustainability-
@@ -165,3 +166,18 @@ We also asked participants to describe the beverages they would most likely buy 
 //[Table data: sustainData /]
 //[Table data: eatingOutFoodData /]
 //[Table data: eatingOutDrinkData /]
+
+// Laura's Code
+[var name:"xAttr" value:"Pork" /]
+[var name:"yAttr" value:"Potatoes" /]
+[var name:"unit" value:"lbs" /]
+[ScatterplotD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit /]
+
+[div style:`{width:'auto', margin: 'auto'}`]
+//[div className:'bar-controls']
+//[button onClick:`unit = "lbs"`]Change to lbs[/button]
+//[/div]
+//[div className:'bar-controls']
+//[button onClick:`unit = "kgs"`]Change to kgs[/button]
+//[/div]
+[/div]
