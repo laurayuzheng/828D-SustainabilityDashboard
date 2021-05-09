@@ -11,161 +11,123 @@
   color:"#ffffff"
    /]
 
-## Introduction
+## Eating Out
 
-This is an Idyll scrolly-telling post. It is generated via
-the file `index.idyll`. To compile this post using
-idyll, run the command `idyll` inside of this directory.
+-insert paragraph about eating out and it's effects on sustainability-
 
-Idyll posts are designed to support interaction and
-data-driven graphics.
 
-Configuration can be done via the `idyll` field in `package.json`.
 
-[var name:"state" value:0 /]
-// Our food data variable
+We asked participants to describe the types of food they would most likely buy when eating out.
+
+[IdyllVegaLite data: foodEatOutData spec:`{
+  "width": "container",
+  "height": 200,
+  "data": {
+    "values": [
+      {"category": "Fast Food", "count": 6},
+      {"category": "Pizza", "count": 5},
+      {"category": "Asian", "count": 3},
+      {"category": "American", "count": 2},
+      {"category": "Varied Takeout", "count": 2},
+      {"category": "Mexican", "count": 1},
+      {"category": "Snacks", "count": 1}
+    ]
+  },
+  "encoding": {
+    "y": {"field": "category", "type": "nominal", "sort": "-x", "title": "Food"},
+    "x": {"field": "count", "type": "quantitative", "title": "Count"}
+  },
+  "layer": [{
+    "mark": "bar",
+    "encoding": {
+      "color": {
+        "field": "count",
+        "type": "quantitative",
+        "title": "Number of People"
+      }
+    }
+  }, {
+    "mark": {
+      "type": "text",
+      "align": "right",
+      "xOffset": -4,
+      "aria": false
+    },
+    "encoding": {
+      "text": {"field": "count", "type": "quantitative"},
+      "color": {
+        "condition": {
+          "test": {"field": "count", "gt": 3},
+          "value": "white"
+        },
+        "value": "black"
+      }
+    }
+  }]
+}` /]
+
+We also asked participants to describe the beverages they would most likely buy when eating out.
+
+[IdyllVegaLite data: drinkEatOutData spec:`{
+  "width": "container",
+  "height": 200,
+  "data": {
+    "values": [
+      {"category": "Coffee", "count": 4},
+      {"category": "Milk tea", "count": 2},
+      {"category": "Bubble tea", "count": 1},
+      {"category": "Smoothie", "count": 1},
+      {"category": "Soda", "count": 1}
+    ]
+  },
+  "encoding": {
+    "y": {"field": "category", "type": "nominal", "sort": "-x", "title": "Drink"},
+    "x": {"field": "count", "type": "quantitative", "title": "Count"}
+  },
+  "layer": [{
+    "mark": "bar",
+    "encoding": {
+      "color": {
+        "field": "count",
+        "type": "quantitative",
+        "title": "Number of People"
+      }
+    }
+  }, {
+    "mark": {
+      "type": "text",
+      "align": "right",
+      "xOffset": -4,
+      "aria": false
+    },
+    "encoding": {
+      "text": {"field": "count", "type": "quantitative"},
+      "color": {
+        "condition": {
+          "test": {"field": "count", "gt": 2},
+          "value": "white"
+        },
+        "value": "black"
+      }
+    }
+  }]
+}` /]
+
+// Survey data
 [data name:'foodData' source:'formatted-data.csv' /]
 
-[Scroller currentStep:state]
+// Sustainability data
+[data name:'sustainData' source:'sustainable-choices.csv' /]
 
-  [Graphic className:"d3-component-container"]
-    [CustomD3Component className:"d3-component" state:`state+1` data:foodData/]
-  [/Graphic]
+// Eating out food data
+[data name:'eatingOutFoodData' source:'eating-out-food.csv' /]
 
-  [Step]
+// Eating out drink data
+[data name:'eatingOutDrinkData' source:'eating-out-drink.csv' /]
 
-    ## Markup
-
-    Idyll is based on Markdown.
-
-    You can use familiar syntax
-    to create **bold** (`**bold**` ) and *italic* (`*italic*` ) styles,
-
-* lists
-* of
-* items,
-
-    ```
-    * lists
-    * of
-    * items,
-    ```
-
-1. and numbered
-2. lists
-3. of items,
+//[Table data: foodData /]
+//[Table data: sustainData /]
+//[Table data: eatingOutFoodData /]
+//[Table data: eatingOutDrinkData /]
 
 
-    ```
-    1. and numbered
-    2. lists
-    3. of items,
-    ```
-
-    in addition to [hyperlinks](https://idyll-lang.org) and images:
-
-    ![quill](static/images/quill.svg)
-
-    ```
-    ![quill](static/images/quill.svg)
-    ```
-  [/Step]
-
-  [Step]
-    ## Components
-
-    Components can be embedded using a bracket syntax:
-
-    ```
-    [Range /]
-    ```
-
-    and can contain nested content:
-
-    ```
-    [Equation]e = mc^{2}[/Equation]
-    ```
-
-    Components accept properties:
-
-    ```
-    [Range value:x min:0 max:1 /]
-    ```
-
-    that can be bound to variables to achieve interactivity (more in next section).
-
-
-    A variety of components are included by default. See [all the available components](https://idyll-lang.org/docs/components/). You can also use any html tag, for example: `[div] A div! [/div]`.
-
-    To create your own, add it to the `components/` folder. There are examples of how to use Idyll with React and D3 based components already included.
-
-  [/Step]
-
-  [Step]
-    ## Interactivity
-
-    Here is how you can instantiate a variable and bind it to a component:
-
-    [var name:"exampleVar" value:5 /]
-
-    [Range min:0 max:10 value:exampleVar /]
-    [Display value:exampleVar /]
-
-    ```
-    [var name:"exampleVar" value:5 /]
-
-    [Range min:0 max:10 value:exampleVar /]
-    [Display value:exampleVar /]
-    ```
-  [/Step]
-
-[/Scroller]
-
-[Scroller]
-
-  [Step]
-
-    ##Scroller
-
-    The `Scroller` component is used to create scroll-based presentations. It can be used to create scrollytelling articles similar to this.
-    It takes a property `currentStep` which is updated when the user scrolls to a different step.
-
-    A persistent graphic may also provided using the `Graphic` component in order to create visualizations.
-
-  [/Step]
-
-  [Step]
-
-    ## Learn More
-
-    To learn more see the documentation at [https://idyll-lang.org/docs/](https://idyll-lang.org/docs/),
-    join our [chatroom](https://gitter.im/idyll-lang/Lobby), or see the project on [GitHub](https://github.com/idyll-lang/idyll).
-  [hr /]
-
-  [/Step]
-
-[/Scroller]
-
-[br/]
-# Technical Details
-
-## Installation
-
-- Make sure you have `idyll` installed (`npm i -g idyll`).
-- Clone this repo and run `npm install`.
-
-## Developing a post locally
-
-Run `idyll`.
-
-## Building a post for production
-
-Run `idyll build`. The output will appear in the top-level `build` folder. To change the output location, change the `output` option in `package.json`.
-
-## Deploying
-
-Make sure your post has been built, then deploy the docs folder via any static hosting service.
-
-## Dependencies
-
-You can install custom dependencies by running `npm install <package-name> --save`. Note that any collaborators will also need download the package locally by running `npm install` after pulling the changes.
