@@ -201,7 +201,10 @@ Here, users can compare food quantities against each other and gain perspective 
 //[/div]
 [/div]
 
-## Ananth's Code
+## How People Buy Groceries
+
+In order to obtain a clear picture of the environmental impacts of one's diet, it is important to consider *what* food an individual eats, as well as *how* they acquire that food. We created a histogram that depicts how far the survey respondents travel weekly in miles to buy groceries. To get a better understanding of carbon footprints, we also allow for filtering based on the method by which people bought groceries. Obviously driving alone in a car has a different impact on the envirionment than walking or talking public transit, so it was important to make that distinction in our survey and corresponding visualizations.
+
 // Dropdown bar to delect which transportation method to visualize in histogram
 [var name:"selectVal" value:"All" /]
 [Select value:selectVal options:`["All", "Bike", "Car", "Carpool", "Delivery", "Public Transportation", "Walking"]`  /]
@@ -209,5 +212,7 @@ Here, users can compare food quantities against each other and gain perspective 
 // Histogram of how far people travel to buy groceries
 [HistogramComponent data:foodData method:selectVal/]
 
+Our survey data suggests that the primary methods of travel for grocery shopping are driving and walking. Interestingly, individuals who primarily drive travel farther distances, with the majority driving more than 5 miles. On the other hand, people who walk travel relatively short distances in comparison; none of the walkers travel more than 1.5 miles to purchase groceries. This divergence is understandable as people who walk would probably want to avoid having to take excessively long routes while carrying the items they purchased. Drivers on the other hand can travel far and long with minimal consequences other than traffic and gas costs.
 
+This has interesting policy implications for reducing carbon emissions. Perhaps more grocery options within 2 miles of campus would result in a greater share of people walking instead of driving. At the moment, the closest options to UMD are Lidl and Target, which suggests more can be done to make College Park a more walkable, environmentally friendly city.
 [br/]
