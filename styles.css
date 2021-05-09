@@ -35,3 +35,25 @@
     margin-left: 65vw;
   }
 }
+
+/* Project styles */
+.bar-controls {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.bar-controls-bounds {
+  width: 100px;
+}
+
+.bar-controls-labels {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
