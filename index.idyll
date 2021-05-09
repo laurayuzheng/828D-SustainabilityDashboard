@@ -1,4 +1,4 @@
-[meta title:"Sustainability" description:"Short description of your project" /]
+[meta title:"Sustainability" description:"Short study on the food footprint of UMD CS students." /]
 
 [Header
   fullWidth:true
@@ -13,6 +13,19 @@
 
 // Our food data variable
 [data name:'foodData' source:'formatted-data.csv' /]
+
+## Background
+According to a [carbon footprint study](https://scholar.harvard.edu/files/xiwangli/files/li_tan_carbon_cleanproduction_2015.pdf) on university students done by Li et al., university students from the United States have the highest carbon emissions per person (nearly 20 tonnes) compared to any other country in the world, with nearly double the emissions compared to the next highest country, the United Kingdom. 
+As students at UMD, we should strive to bring awareness to our environmental footprint and educate ourselves on sustainable alternatives to wasteful choices. 
+
+For our CMSC828D project, we are focusing on a Sustainability Data Story to help us in that objective. With help from Dr. Battle and [UMD Sustainability](https://sustainability.umd.edu/), we conducted a small study on food choices of computer science students at UMD. 
+First, we reviewed existing sustainability visualizations, carbon calculators, and related work to gauge different angles for our study. Then, we contacted Allison Tjaden, Assistant Director of New Iniatives for UMD Dining Services, for resource recommendations. 
+It was through this process that we came across the [Cool Food Pledge carbon footprint calculator](https://www.wri.org/research/tracking-progress-toward-cool-food-pledge-setting-climate-targets-tracking-metrics-using), which was crucial throughout our study design and analyses. 
+We designed a questionnaire, which we had iteratively improved upon under the advising of UMD Sustainability and Dr. Battle. 
+This questionnaire was sent out to numerous UMD student groups, as well as to our own class at CMSC828D. In total, we were able to achieve 12 responses. While this is a small number of responses, they are incredibly thoughtful and quality responses given the time constraints. 
+Finally, we processed our data and designed this data story to share with you all.  
+
+We created this data story using Idyll, React, and Vega-Lite libraries. 
 
 ## Demographics
 
@@ -170,6 +183,10 @@ We also asked participants to describe the beverages they would most likely buy 
 //[Table data: eatingOutDrinkData /]
 
 ## Laura's Code
+One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
+To answer this, we created an interactive bubble plot which encodes food quantities and total carbon cost of that particular person. 
+Here, users can compare food quantities against each other and gain perspective on the total carbon cost of those food choices. 
+
 [var name:"xAttr" value:"Pork" /]
 [var name:"yAttr" value:"Potatoes" /]
 [var name:"lauraUnit" value:"lbs" /]
