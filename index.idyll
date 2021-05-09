@@ -1,4 +1,4 @@
-[meta title:"Sustainability Data Story" description:"Short description of your project" /]
+[meta title:"Sustainability" description:"Short description of your project" /]
 
 [Header
   fullWidth:true
@@ -22,6 +22,10 @@ In total, there were 13 people who responded and all of them were students at th
 [var name:"attribute" value:"dining" /]
 [PieD3Component data:foodData attribute:attribute/]
 [PieControllerComponent attribute:attribute/]
+
+Here is another demographic...
+
+[demographic data:foodData/]
 
 ## Total Units of Foods
 
@@ -167,7 +171,7 @@ We also asked participants to describe the beverages they would most likely buy 
 //[Table data: eatingOutFoodData /]
 //[Table data: eatingOutDrinkData /]
 
-// Laura's Code
+## Laura's Code
 [var name:"xAttr" value:"Pork" /]
 [var name:"yAttr" value:"Potatoes" /]
 [var name:"unit" value:"lbs" /]
@@ -182,10 +186,7 @@ We also asked participants to describe the beverages they would most likely buy 
 //[/div]
 [/div]
 
-// Ananth's Code
-// Our food data variable
-[data name:'foodData' source:'formatted-data.csv' /]
-
+## Ananth's Code
 // Dropdown bar to delect which transportation method to visualize in histogram
 [var name:"selectVal" value:"All" /]
 [Select value:selectVal options:`["All", "Bike", "Car", "Carpool", "Delivery", "Public Transportation", "Walking"]`  /]
