@@ -47,6 +47,21 @@ Feel free to explore by changing the attributes displayed.
 **Program Years** [Select value:Program options:`["None", "1", "2", "3", "4", "5+"]`/]
 [button onClick:`School = "None"; Gender="None"; Major="None"; Program="None"`]**Reset**[/button]
 
+## How People Buy Groceries
+
+In order to obtain a clear picture of the environmental impacts of one's diet, it is important to consider *what* food an individual eats, as well as *how* they acquire that food. We created a histogram that depicts how far the survey respondents travel weekly in miles to buy groceries. To get a better understanding of carbon footprints, we also allow for filtering based on the method by which people bought groceries. Obviously driving alone in a car has a different impact on the envirionment than walking or talking public transit, so it was important to make that distinction in our survey and corresponding visualizations.
+
+// Dropdown bar to delect which transportation method to visualize in histogram
+[var name:"selectVal" value:"All" /]
+[Select value:selectVal options:`["All", "Bike", "Car", "Carpool", "Delivery", "Public Transportation", "Walking"]`  /]
+
+// Histogram of how far people travel to buy groceries
+[HistogramComponent data:foodData method:selectVal/]
+
+Our survey data suggests that the primary methods of travel for grocery shopping are driving and walking. Interestingly, individuals who primarily drive travel farther distances, with the majority driving more than 5 miles. On the other hand, people who walk travel relatively short distances in comparison; none of the walkers travel more than 1.5 miles to purchase groceries. This divergence is understandable as people who walk would probably want to avoid having to take excessively long routes while carrying the items they purchased. Drivers on the other hand can travel far and long with minimal consequences other than traffic and gas costs.
+
+This has interesting policy implications for reducing carbon emissions. Perhaps more grocery options within 2 miles of campus would result in a greater share of people walking instead of driving. At the moment, the closest options to UMD are Lidl and Target, which suggests more can be done to make College Park a more walkable, environmentally friendly city.
+
 ## Total Weights of Food Consumption
 
 One of the biggest contributing factors to a student's carbon footprint is the type of food they eat. Different foods/drinks have different amounts of CO2 emitted and 
@@ -72,6 +87,26 @@ Feel free to explore the visualization by varying the parameters and hovering ov
 We can observe that students consume milk, eggs, and poultry the most on a weekly basis. Milk consumption seems to surpass all other total food consumption weights by a large amount and seems
 to be an outlier in terms of weight. Another interesting observation is that students seem to consume a lot more dairy than meat and seafood combined. Lastly, it seems like olive oil is more widely used among 
 students than rapseed, canola, soybean, palm, and sunflower oil. In one of the following sections we will analyze the total carbon footprint of these foods.  
+
+## Patterns in Food Choices and Carbon Impact
+One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
+To answer this, we created an interactive bubble plot which encodes food quantities and total carbon cost of that particular person.
+Here, users can compare food quantities against each other and gain perspective on the total carbon cost of those food choices.
+
+[var name:"xAttr" value:"Pork" /]
+[var name:"yAttr" value:"Potatoes" /]
+[var name:"lauraUnit" value:"lbs" /]
+[data name:'lauraFoodData' source:'formatted-data.csv' /]
+[ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
+
+// [div style:`{width:'auto', margin: 'auto'}`]
+//[div className:'bar-controls']
+//[button onClick:`unit = "lbs"`]Change to lbs[/button]
+//[/div]
+//[div className:'bar-controls']
+//[button onClick:`unit = "kgs"`]Change to kgs[/button]
+//[/div]
+// [/div]
 
 ## Eating Out
 
@@ -309,38 +344,4 @@ When it comes to consciously and actively making sustainable choices, there was 
 
 In addition to collecting data on carbon footprints from personal food choices, our survey also aimed to raise awareness on sustainability in individuals. We asked each participant to rate how much their attitude toward sustainability has changed after completing our form. Although the majority of people stated no change at all, we had responses from slight to extreme changes in their attitude. 
 
-## Patterns in Food Choices and Carbon Impact
-One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
-To answer this, we created an interactive bubble plot which encodes food quantities and total carbon cost of that particular person. 
-Here, users can compare food quantities against each other and gain perspective on the total carbon cost of those food choices. 
-
-[var name:"xAttr" value:"Pork" /]
-[var name:"yAttr" value:"Potatoes" /]
-[var name:"lauraUnit" value:"lbs" /]
-[data name:'lauraFoodData' source:'formatted-data.csv' /]
-[ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
-
-// [div style:`{width:'auto', margin: 'auto'}`]
-//[div className:'bar-controls']
-//[button onClick:`unit = "lbs"`]Change to lbs[/button]
-//[/div]
-//[div className:'bar-controls']
-//[button onClick:`unit = "kgs"`]Change to kgs[/button]
-//[/div]
-// [/div]
-
-## How People Buy Groceries
-
-In order to obtain a clear picture of the environmental impacts of one's diet, it is important to consider *what* food an individual eats, as well as *how* they acquire that food. We created a histogram that depicts how far the survey respondents travel weekly in miles to buy groceries. To get a better understanding of carbon footprints, we also allow for filtering based on the method by which people bought groceries. Obviously driving alone in a car has a different impact on the envirionment than walking or talking public transit, so it was important to make that distinction in our survey and corresponding visualizations.
-
-// Dropdown bar to delect which transportation method to visualize in histogram
-[var name:"selectVal" value:"All" /]
-[Select value:selectVal options:`["All", "Bike", "Car", "Carpool", "Delivery", "Public Transportation", "Walking"]`  /]
-
-// Histogram of how far people travel to buy groceries
-[HistogramComponent data:foodData method:selectVal/]
-
-Our survey data suggests that the primary methods of travel for grocery shopping are driving and walking. Interestingly, individuals who primarily drive travel farther distances, with the majority driving more than 5 miles. On the other hand, people who walk travel relatively short distances in comparison; none of the walkers travel more than 1.5 miles to purchase groceries. This divergence is understandable as people who walk would probably want to avoid having to take excessively long routes while carrying the items they purchased. Drivers on the other hand can travel far and long with minimal consequences other than traffic and gas costs.
-
-This has interesting policy implications for reducing carbon emissions. Perhaps more grocery options within 2 miles of campus would result in a greater share of people walking instead of driving. At the moment, the closest options to UMD are Lidl and Target, which suggests more can be done to make College Park a more walkable, environmentally friendly city.
 [br/]
