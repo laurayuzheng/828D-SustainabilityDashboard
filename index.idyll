@@ -313,7 +313,7 @@ When it comes to consciously and actively making sustainable choices, there was 
 
 In addition to collecting data on carbon footprints from personal food choices, our survey also aimed to raise awareness on sustainability in individuals. We asked each participant to rate how much their attitude toward sustainability has changed after completing our form. Although the majority of people stated no change at all, we had responses from slight to extreme changes in their attitude. 
 
-## Laura's Code
+## Patterns in Food Choices and Carbon Impact
 One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
 To answer this, we created an interactive bubble plot which encodes food quantities and total carbon cost of that particular person. 
 Here, users can compare food quantities against each other and gain perspective on the total carbon cost of those food choices. 
