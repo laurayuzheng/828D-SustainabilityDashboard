@@ -1,4 +1,4 @@
-[meta title:"Sustainability" description:"Short description of your project" /]
+[meta title:"Sustainability" description:"Short study on the food footprint of UMD CS students." /]
 
 [Header
   fullWidth:true
@@ -14,16 +14,27 @@
 // Our food data variable
 [data name:'foodData' source:'formatted-data.csv' /]
 
+## Background
+According to a [carbon footprint study](https://scholar.harvard.edu/files/xiwangli/files/li_tan_carbon_cleanproduction_2015.pdf) on university students done by Li et al., university students from the United States have the highest carbon emissions per person (nearly 20 tonnes) compared to any other country in the world, with nearly double the emissions compared to the next highest country, the United Kingdom. 
+As students at UMD, we should strive to bring awareness to our environmental footprint and educate ourselves on sustainable alternatives to wasteful choices. 
+
+For our CMSC828D project, we are focusing on a Sustainability Data Story to help us in that objective. With help from Dr. Battle and [UMD Sustainability](https://sustainability.umd.edu/), we conducted a small study on food choices of computer science students at UMD. 
+First, we reviewed existing sustainability visualizations, carbon calculators, and related work to gauge different angles for our study. Then, we contacted Allison Tjaden, Assistant Director of New Iniatives for UMD Dining Services, for resource recommendations. 
+It was through this process that we came across the [Cool Food Pledge carbon footprint calculator](https://www.wri.org/research/tracking-progress-toward-cool-food-pledge-setting-climate-targets-tracking-metrics-using), which was crucial throughout our study design and analyses. 
+We designed a questionnaire, which we had iteratively improved upon under the advising of UMD Sustainability and Dr. Battle. 
+This questionnaire was sent out to numerous UMD student groups, as well as to our own class at CMSC828D. In total, we were able to achieve 12 responses. While this is a small number of responses, they are incredibly thoughtful and quality responses given the time constraints. 
+Finally, we processed our data and designed this data story to share with you all.  
+
+We created this data story using Idyll, React, and Vega-Lite libraries. 
+
 ## Demographics
 
 Our surveyed people contains a diverse group of people. Feel free to explore by changing the attribute displayed.
 In total, there were 13 people who responded and all of them were students at the University of Maryland. 
 
-[var name:"attribute" value:"dining" /]
-[PieD3Component data:foodData attribute:attribute/]
-[PieControllerComponent attribute:attribute/]
-
-Here is another demographic...
+// [var name:"attribute" value:"dining" /]
+// [PieD3Component data:foodData attribute:attribute/]
+// [PieControllerComponent attribute:attribute/]
 
 [demographic data:foodData/]
 
@@ -289,10 +300,14 @@ When it comes to consciously and actively making sustainable choices, there was 
 In addition to collecting data on carbon footprints from personal food choices, our survey also aimed to raise awareness on sustainability in individuals. We asked each participant to rate how much their attitude toward sustainability has changed after completing our form. Although the majority of people stated no change at all, we had responses from slight to extreme changes in their attitude. 
 
 ## Laura's Code
+One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
+To answer this, we created an interactive bubble plot which encodes food quantities and total carbon cost of that particular person. 
+Here, users can compare food quantities against each other and gain perspective on the total carbon cost of those food choices. 
+
 [var name:"xAttr" value:"Pork" /]
 [var name:"yAttr" value:"Potatoes" /]
-[var name:"unit" value:"lbs" /]
-[ScatterplotD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:unit /]
+[var name:"lauraUnit" value:"lbs" /]
+[ScatterplotD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
 
 [div style:`{width:'auto', margin: 'auto'}`]
 //[div className:'bar-controls']
@@ -303,7 +318,10 @@ In addition to collecting data on carbon footprints from personal food choices, 
 //[/div]
 [/div]
 
-## Ananth's Code
+## How People Buy Groceries
+
+In order to obtain a clear picture of the environmental impacts of one's diet, it is important to consider *what* food an individual eats, as well as *how* they acquire that food. We created a histogram that depicts how far the survey respondents travel weekly in miles to buy groceries. To get a better understanding of carbon footprints, we also allow for filtering based on the method by which people bought groceries. Obviously driving alone in a car has a different impact on the envirionment than walking or talking public transit, so it was important to make that distinction in our survey and corresponding visualizations.
+
 // Dropdown bar to delect which transportation method to visualize in histogram
 [var name:"selectVal" value:"All" /]
 [Select value:selectVal options:`["All", "Bike", "Car", "Carpool", "Delivery", "Public Transportation", "Walking"]`  /]
@@ -311,5 +329,7 @@ In addition to collecting data on carbon footprints from personal food choices, 
 // Histogram of how far people travel to buy groceries
 [HistogramComponent data:foodData method:selectVal/]
 
+Our survey data suggests that the primary methods of travel for grocery shopping are driving and walking. Interestingly, individuals who primarily drive travel farther distances, with the majority driving more than 5 miles. On the other hand, people who walk travel relatively short distances in comparison; none of the walkers travel more than 1.5 miles to purchase groceries. This divergence is understandable as people who walk would probably want to avoid having to take excessively long routes while carrying the items they purchased. Drivers on the other hand can travel far and long with minimal consequences other than traffic and gas costs.
 
+This has interesting policy implications for reducing carbon emissions. Perhaps more grocery options within 2 miles of campus would result in a greater share of people walking instead of driving. At the moment, the closest options to UMD are Lidl and Target, which suggests more can be done to make College Park a more walkable, environmentally friendly city.
 [br/]
