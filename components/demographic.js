@@ -73,7 +73,7 @@ class Demographics extends D3Component {
 
         graphGrad.append("g")
         .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yGrad));
+        .call(d3.axisLeft(yGrad).ticks(Math.max.apply(Math, gradData.map(function(o) { return o.value;}))));
 
         graphGrad.append("g")
         .attr("class", "axis axis--x")
@@ -247,21 +247,30 @@ class Demographics extends D3Component {
         var majorData = [];
         var programData = [];
 
+        var programInt = "5+"
+        if (props.program != "5+" &&  props.program != "None") {
+            programInt = parseInt(props.program);
+        }
+        console.log(programInt)
+
         props.data.forEach(d => {
-            // if (Object.values(d).indexOf(props.school) > -1 || props.school == "None") {
+            if ((Object.values(d).indexOf(props.school) > -1 || props.school == "None") && 
+            (Object.values(d).indexOf(props.gender) > -1 || props.gender == "None") &&
+            (Object.values(d).indexOf(props.major) > -1 || props.major == "None") &&
+            (props.program == "None" || d['How many years are you into your program?'] == programInt)) {
 
-            var temp = d['Are you an undergraduate or graduate student?'];
-            gradData = count(temp, gradData);
+                var temp = d['Are you an undergraduate or graduate student?'];
+                gradData = count(temp, gradData);
 
-            temp = d['What gender do you identify as?']
-            genderData = count(temp, genderData);
+                temp = d['What gender do you identify as?']
+                genderData = count(temp, genderData);
 
-            temp = d['What is your major?']
-            majorData = count(temp, majorData);
-
-            temp = d['How many years are you into your program?']
-            programData = count(temp, programData);
-            // }
+                temp = d['What is your major?']
+                majorData = count(temp, majorData);
+    
+                temp = d['How many years are you into your program?']
+                programData = count(temp, programData);
+            }
         });
 
         function count(name, struct) {
@@ -276,6 +285,7 @@ class Demographics extends D3Component {
             return struct
         }
         programData.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        console.log(programData)
 
         const grad = d3.select('#vis').append('svg');;
 
@@ -306,7 +316,7 @@ class Demographics extends D3Component {
 
         graphGrad.append("g")
         .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yGrad));
+        .call(d3.axisLeft(yGrad).ticks(Math.max.apply(Math, gradData.map(function(o) { return o.value;}))));
 
         graphGrad.append("g")
         .attr("class", "axis axis--x")
@@ -356,7 +366,7 @@ class Demographics extends D3Component {
 
         graphGender.append("g")
         .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yGender));
+        .call(d3.axisLeft(yGender).ticks(Math.max.apply(Math, genderData.map(function(o) { return o.value;}))));
 
         graphGender.append("g")
         .attr("class", "axis axis--x")
@@ -404,7 +414,7 @@ class Demographics extends D3Component {
 
         graphMajor.append("g")
         .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yMajor));
+        .call(d3.axisLeft(yMajor).ticks(Math.max.apply(Math, majorData.map(function(o) { return o.value;}))));
 
         graphMajor.append("g")
         .attr("class", "axis axis--x")
@@ -453,7 +463,7 @@ class Demographics extends D3Component {
 
         graphProgram.append("g")
         .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yProgram));
+        .call(d3.axisLeft(yProgram).ticks(Math.max.apply(Math, programData.map(function(o) { return o.value;}))));
 
         graphProgram.append("g")
         .attr("class", "axis axis--x")

@@ -29,14 +29,28 @@ We created this data story using Idyll, React, and Vega-Lite libraries.
 
 ## Demographics
 
-Our surveyed people contains a diverse group of people. Feel free to explore by changing the attribute displayed.
-In total, there were 13 people who responded and all of them were students at the University of Maryland. 
+In total, 12 people responded and all of them were students at the 
+University of Maryland. Our surveyed people contained a diverse group of people; however, it is clear from the visualzations that the data collected may  
+not be representative of the UMD student body. In particular, the people surveyed 
+were typically male graduates who are majoring in computer science. Whilst the data may 
+not be representative, it does give some initial insight into the food choices UMD students make.
+Feel free to explore by changing the attributes displayed. 
 
 // [var name:"attribute" value:"dining" /]
 // [PieD3Component data:foodData attribute:attribute/]
 // [PieControllerComponent attribute:attribute/]
 
-[demographic data:foodData/]
+[var name:"School" value:"None" /]
+[var name:"Gender" value:"None" /]
+[var name:"Major" value:"None" /]
+[var name:"Program" value:"None" /]
+
+[demographic data:`foodData` school: `School` gender: `Gender` major: `Major` program: `Program`/]
+**School Type** [Select value:School options:`["None", "Undergrad", "Graduate"]`/] 
+**Gender** [Select value:Gender options:`["None", "Male", "Female"]`/] 
+**Major** [Select value:Major options:`["None", "Computer Science", "Biological Sciences"]`/] 
+**Program Years** [Select value:Program options:`["None", "1", "2", "3", "4", "5+"]`/]
+[button onClick:`School = "None"; Gender="None"; Major="None"; Program="None"`]**Reset**[/button]
 
 ## Total Units of Foods
 
