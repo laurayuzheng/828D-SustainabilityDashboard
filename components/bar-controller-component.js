@@ -75,7 +75,7 @@ class BarControllerComponent extends React.Component {
                 <label className="bar-controls-labels" htmlFor="upper-bound">Upper:</label>
                 <input className="bar-controls-bounds" id="upper-bound" onChange={this.changeUpperBound.bind(this)} type="text" value={this.props.upperBound}></input>
                 <label className="bar-controls-labels" htmlFor="search">Search:</label>
-                <input className="bar-controls" id="search" onChange={this.changeSearch.bind(this)} type="text"></input>
+                <input className="bar-controls" id="search" onChange={this.changeSearch.bind(this)} value={this.props.search} type="text"></input>
             </div>
         );
     }

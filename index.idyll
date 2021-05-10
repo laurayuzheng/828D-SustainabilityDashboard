@@ -3,10 +3,9 @@
 [Header
   fullWidth:true
   title:"UMD Food Choices"
-  subtitle:"A Data Story on Food Choices using Surveyed data from UMD students"
-  author:"Your Name Here"
-  authorLink:"https://idyll-lang.org"
-  date:"Apr 29, 2021"
+  subtitle:"A Data Story on Food Choices using Surveyed Data from UMD Students"
+  author:"Diana Chou, Ananth Penghat, David Wang, Matthew Wong, Laura Zheng"
+  date:"May 9, 2021"
   background:"#222222"
   color:"#ffffff"
    /]
@@ -15,30 +14,26 @@
 [data name:'foodData' source:'formatted-data.csv' /]
 
 ## Background
-According to a [carbon footprint study](https://scholar.harvard.edu/files/xiwangli/files/li_tan_carbon_cleanproduction_2015.pdf) on university students done by Li et al., university students from the United States have the highest carbon emissions per person (nearly 20 tonnes) compared to any other country in the world, with nearly double the emissions compared to the next highest country, the United Kingdom. 
+According to a [a href:"https://scholar.harvard.edu/files/xiwangli/files/li_tan_carbon_cleanproduction_2015.pdf"]carbon footprint study[/a] on university students done by Li et al., university students from the United States have the highest carbon emissions per person (nearly 20 tonnes) compared to any other country in the world, with nearly double the emissions compared to the next highest country, the United Kingdom. 
 As students at UMD, we should strive to bring awareness to our environmental footprint and educate ourselves on sustainable alternatives to wasteful choices. 
 
-For our CMSC828D project, we are focusing on a Sustainability Data Story to help us in that objective. With help from Dr. Battle and [UMD Sustainability](https://sustainability.umd.edu/), we conducted a small study on food choices of computer science students at UMD. 
+For our CMSC828D project, we are focusing on a Sustainability Data Story to help us in that objective. With help from Dr. Battle and [a href:"https://sustainability.umd.edu/"]UMD Sustainability[/a], we conducted a small study on food choices of computer science students at UMD. 
 First, we reviewed existing sustainability visualizations, carbon calculators, and related work to gauge different angles for our study. Then, we contacted Allison Tjaden, Assistant Director of New Iniatives for UMD Dining Services, for resource recommendations. 
-It was through this process that we came across the [Cool Food Pledge carbon footprint calculator](https://www.wri.org/research/tracking-progress-toward-cool-food-pledge-setting-climate-targets-tracking-metrics-using), which was crucial throughout our study design and analyses. 
+It was through this process that we came across the [a href:"https://www.wri.org/research/tracking-progress-toward-cool-food-pledge-setting-climate-targets-tracking-metrics-using"]Cool Food Pledge carbon footprint calculator[/a], which was crucial throughout our study design and analyses. 
 We designed a questionnaire, which we had iteratively improved upon under the advising of UMD Sustainability and Dr. Battle. 
-This questionnaire was sent out to numerous UMD student groups, as well as to our own class at CMSC828D. In total, we were able to achieve 12 responses. While this is a small number of responses, they are incredibly thoughtful and quality responses given the time constraints. 
+This questionnaire was sent out to numerous UMD student groups, as well as to our own class at CMSC828D. In total, we were able to achieve 13 responses. While this is a small number of responses, they are incredibly thoughtful and quality responses given the time constraints. 
 Finally, we processed our data and designed this data story to share with you all.  
 
 We created this data story using Idyll, React, and Vega-Lite libraries. 
 
 ## Demographics
 
-In total, 12 people responded and all of them were students at the 
+In total, 13 people responded and all of them were students at the 
 University of Maryland. Our surveyed people contained a diverse group of people; however, it is clear from the visualzations that the data collected may  
 not be representative of the UMD student body. In particular, the people surveyed 
 were typically male graduates who are majoring in computer science. Whilst the data may 
 not be representative, it does give some initial insight into the food choices UMD students make.
 Feel free to explore by changing the attributes displayed. 
-
-// [var name:"attribute" value:"dining" /]
-// [PieD3Component data:foodData attribute:attribute/]
-// [PieControllerComponent attribute:attribute/]
 
 [var name:"School" value:"None" /]
 [var name:"Gender" value:"None" /]
@@ -52,11 +47,13 @@ Feel free to explore by changing the attributes displayed.
 **Program Years** [Select value:Program options:`["None", "1", "2", "3", "4", "5+"]`/]
 [button onClick:`School = "None"; Gender="None"; Major="None"; Program="None"`]**Reset**[/button]
 
-## Total Units of Foods
+## Total Weights of Food Consumption
 
-In our survey, we asked about certain amounts of foods that UMD students would purchase weekly. Below are our results.
-Feel free to explore the visualization by varying the parameters and hover over different bars to see the 
-total values.
+One of the biggest contributing factors to a student's carbon footprint is the type of food they eat. Different foods/drinks have different amounts of CO2 emitted and 
+land used during production. It is critical to identify certain foods/drinks that students eat the most and bring awareness to the amount of food they are eating compared to
+other foods. These totals are not representative of the whole UMD population, since different people have different consumption weights of different foods, but it 
+gives a sense of what foods/drinks are most consumed by a lot of the students. 
+Feel free to explore the visualization by varying the parameters and hovering over different bars to see the total food weights for all students who were surveyed.
 
 [var name:"state" value:0 /]
 [var name:"unit" value:"kgs" /]
@@ -72,11 +69,10 @@ total values.
 
 
 [br /]
-From the bar graph above, we can see that the top foods consumption include milk, eggs, and poultry. 
-Another observation is that a lot of the surveyed users do not use a lot of different oils. Canola and 
-olive oil are the most popular.
+We can observe that students consume milk, eggs, and poultry the most on a weekly basis. Milk consumption seems to surpass all other total food consumption weights by a large amount and seems
+to be an outlier in terms of weight. Another interesting observation is that students seem to consume a lot more dairy than meat and seafood combined. Lastly, it seems like olive oil is more widely used among 
+students than rapseed, canola, soybean, palm, and sunflower oil. In one of the following sections we will analyze the total carbon footprint of these foods.  
 
-## Diana's Code
 ## Eating Out
 
 // Sustainability data
@@ -321,16 +317,17 @@ Here, users can compare food quantities against each other and gain perspective 
 [var name:"xAttr" value:"Pork" /]
 [var name:"yAttr" value:"Potatoes" /]
 [var name:"lauraUnit" value:"lbs" /]
-[ScatterplotD3Component data:foodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
+[data name:'lauraFoodData' source:'formatted-data.csv' /]
+[ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
 
-[div style:`{width:'auto', margin: 'auto'}`]
+// [div style:`{width:'auto', margin: 'auto'}`]
 //[div className:'bar-controls']
 //[button onClick:`unit = "lbs"`]Change to lbs[/button]
 //[/div]
 //[div className:'bar-controls']
 //[button onClick:`unit = "kgs"`]Change to kgs[/button]
 //[/div]
-[/div]
+// [/div]
 
 ## How People Buy Groceries
 
