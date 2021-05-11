@@ -79,9 +79,22 @@ class HistogramComponent extends D3Component {
         }
       });
       console.log(miles)
+
+      let domainEnd = 0;
+      if (miles.length == 0) {
+        domainEnd = 15;
+      } else if (miles.length == 1) {
+        domainEnd = Math.max(...miles) + 2
+      } else {
+        domainEnd = Math.max(...miles)
+      }
+      if (domainEnd == 0) {
+        domainEnd = 15;
+      }
+      console.log(domainEnd)
       // X axis: scale and draw:
       var x = d3.scaleLinear()
-          .domain([0, Math.max(...miles)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+          .domain([0, domainEnd])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
           .range([0, width]);
       svg.append("g")
           .attr("transform", "translate(0," + height + ")")
@@ -94,11 +107,17 @@ class HistogramComponent extends D3Component {
         .thresholds(x.ticks(divisions)); // Numbers of bins
 
       var bins = histogram(miles); // Calculate the bins
+      console.log(bins)
 
+      let yDomainEnd = 0;
+      yDomainEnd = d3.max(bins, function(d) { return d.length; })
+      if (yDomainEnd == 0) {
+        yDomainEnd = 5
+      }
       // Y axis: scale and draw:
       var y = d3.scaleLinear()
           .range([height, 0]);
-      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+      y.domain([0, yDomainEnd]);   // d3.hist has to be called before the Y axis obviously
       svg.append("g")
           .call(d3.axisLeft(y));
 
@@ -140,7 +159,12 @@ class HistogramComponent extends D3Component {
         .append("rect")
           .attr("x", 1)
           .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-          .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+          .attr("width", function(d) { 
+            if (x(d.x1) - x(d.x0) -1 <= 0) {
+              return 0;
+            }
+            return x(d.x1) - x(d.x0) -1 ; 
+          })
           .attr("height", function(d) { return height - y(d.length); })
           .style("fill", colorToUse)
     };
