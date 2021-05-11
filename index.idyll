@@ -45,6 +45,7 @@ Feel free to explore by changing the attributes displayed.
 **Gender** [Select value:Gender options:`["None", "Male", "Female"]`/] 
 **Major** [Select value:Major options:`["None", "Computer Science", "Biological Sciences"]`/] 
 **Program Years** [Select value:Program options:`["None", "1", "2", "3", "4", "5+"]`/]
+[br /]
 [button onClick:`School = "None"; Gender="None"; Major="None"; Program="None"`]**Reset**[/button]
 
 ## How People Buy Groceries
@@ -81,7 +82,6 @@ Feel free to explore the visualization by varying the parameters and hovering ov
 [BarD3Component data:foodData unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
 [BarControllerComponent unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
 [button onClick:`unit="kgs"; sortby="count"; orderby="descending"; search=""; lowerBound="0"; upperBound="50"`]Reset[/button]
-
 
 [br /]
 We can observe that students consume milk, eggs, and poultry the most on a weekly basis. Milk consumption seems to surpass all other total food consumption weights by a large amount and seems
@@ -151,11 +151,11 @@ Y-Axis Food:
       "Wine", 
       "Coffee (Ground or whole bean)", 
       "Sugar" ]`  /]
+[br /][br /]
 [button onClick:`lauraUnit = "lbs"`]Change to lbs[/button]
 [button onClick:`lauraUnit = "kgs"`]Change to kgs[/button]
 [data name:'lauraFoodData' source:'formatted-data.csv' /]
 [ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
-
 
 ## Eating Out
 
@@ -170,43 +170,54 @@ Cooking at home is not only a cheaper option but also gives someone more control
 
 As much as cooking at home is appealing for both sustainability and one's wallet, it is understandable that the busy life of a college student often inhibits the flexbility to choose home-cooked meals as a feasible option. In addition to gathering data on their weekly groceries, we also asked for information on the amount of times partipants would eat out for meals and drinks per week.
 
+[var name:"colorBy" value:`{}` /]
+
 [IdyllVegaLite data:foodData spec:`{
-  "width": "container",
-  "mark": {
-    "type": "circle",
-    "size": 70
+  width: "container",
+  mark: {
+    type: "circle",
+    size: 100
   }, 
-  "title": {
-    "text": "Purchased Meals vs. Purchased Drinks (per Week)",
-    "fontSize": 18
+  title: {
+    text: "Purchased Meals vs. Purchased Drinks (per Week)",
+    fontSize: 18
   }, 
-  "encoding": {
-    "x": {"field": "eating_out_food", "type": "quantitative", "title": "Meals per Week"},
-    "y": {"field": "eating_out_drink", "type": "quantitative", "title": "Drinks per Week"},
-    "color": {"field": "Are you an undergraduate or graduate student?", "type": "nominal", "title": "UMD Student"},
-    "tooltip": [
-      {"field": "eating_out_food", "type": "quantitative", "title": "Meals per Week"},
-      {"field": "eating_out_drink", "type": "quantitative", "title": "Drinks per Week"}
-    ]
+  encoding: {
+    x: {field: "eating_out_food", type: "quantitative", title: "Meals per Week"},
+    y: {field: "eating_out_drink", type: "quantitative", title: "Drinks per Week"},
+    tooltip: [
+      {field: "eating_out_food", type: "quantitative", title: "Meals per Week"},
+      {field: "eating_out_drink", type: "quantitative", title: "Drinks per Week"}
+    ], 
+    color: colorBy
   }
 }` /]
+
+Color by:
+  [button onClick:`colorBy = {}` ]None[/button]
+  [button onClick:`colorBy = {field: 'Are you an undergraduate or graduate student?', title: 'Program', scale: {range: ['#E72200', '#F2AA00']}}` ]Program[/button]
+  [button onClick:`colorBy = {field: 'What gender do you identify as?', title: 'Gender', scale: {range: ['#FF33FF', '#337FFF']}}` ]Gender[/button]
+  [button onClick:`colorBy = {field: 'What is your major?', title: 'Major', scale: {range: ['#20C000', '#9433F2']}}` ]Major[/button]
+  [button onClick:`colorBy = {field: 'How many years are you into your program?', title: 'Years', scale: {scheme: 'set1'}}` ]Years[/button]
+
+[br /]
 
 The different types of cuisines offered by an establishment can highly impact their carbon footprint from the ingredients used to types of packaging they offer. We asked participants to describe the types of meals they would most likely buy when eating out.
 
 [IdyllVegaLite data:eatingOutFoodData spec:`{
-  "width": "container",
-  "height": 200,
-  "mark": "bar",
-  "title": {
-    "text": "Most Likely Purchased Meals",
-    "fontSize": 18
+  width: "container",
+  height: 200,
+  mark: "bar",
+  title: {
+    text: "Most Likely Purchased Meals",
+    fontSize: 18
   }, 
-  "encoding": {
-    "x": {"aggregate": "count", "title": null},
-    "y": {"field": "Food", "type": "nominal", "sort": "-x", "title": null},
-    "tooltip": [
-      {"field": "Food", "type": "nominal", "title": "Type of Food"}, 
-      {"aggregate": "count", "title": "Number of Participants"}
+  encoding: {
+    x: {aggregate: "count", title: null},
+    y: {field: "Food", type: "nominal", sort: "-x", title: null},
+    tooltip: [
+      {field: "Food", type: "nominal", title: "Type of Food"}, 
+      {aggregate: "count", title: "Number of Participants"}
     ]
   }
 }` /]
@@ -393,4 +404,3 @@ When it comes to consciously and actively making sustainable choices, there was 
 
 In addition to collecting data on carbon footprints from personal food choices, our survey also aimed to raise awareness on sustainability in individuals. We asked each participant to rate how much their attitude toward sustainability has changed after completing our form. Although the majority of people stated no change at all, we had responses from slight to extreme changes in their attitude. 
 
-[br/]

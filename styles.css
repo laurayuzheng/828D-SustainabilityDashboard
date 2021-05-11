@@ -54,6 +54,12 @@
 .controls {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
+}
+
+button {
+  position: relative;
+  display: inline-block;
+  margin: 2px;
 }
