@@ -92,21 +92,70 @@ students than rapseed, canola, soybean, palm, and sunflower oil. In one of the f
 One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
 To answer this, we created an interactive bubble plot which encodes food quantities and total carbon cost of that particular person.
 Here, users can compare food quantities against each other and gain perspective on the total carbon cost of those food choices.
+In this visualization, the blue circles represent the graduate data, while the green circles represent undergraduate data. 
 
-[var name:"xAttr" value:"Pork" /]
+[var name:"xAttr" value:"Beef / buffalo" /]
 [var name:"yAttr" value:"Potatoes" /]
 [var name:"lauraUnit" value:"lbs" /]
+
+X-Axis Food: 
+[Select value:xAttr options:`["Beef / buffalo",
+      "Lamb / goat",
+      "Pork",
+      "Poultry (chicken, turkey, or any other bird meats)", 
+      "Fish (finfish)", 
+      "Crustaceans (e.g., shrimp, prawns, crabs, lobster)", 
+      "Mollusks (e.g., clams, oysters, squid, octopus)", 
+      "Butter",
+      "Cheese",
+      "Ice cream", 
+      "Cream", 
+      "Milk (cow's milk)",
+      "Yogurt", 
+      "Eggs",
+      "Potatoes",
+      "Cassava / Other roots", 
+      "Soybean oil", 
+      "Palm oil", 
+      "Sunflower oil",
+      "Rapeseed / canola oil", 
+      "Olive oil", 
+      "Beer", 
+      "Wine", 
+      "Coffee (Ground or whole bean)", 
+      "Sugar" ]`  /]
+
+Y-Axis Food: 
+[Select value:yAttr options:`["Beef / buffalo",
+      "Lamb / goat",
+      "Pork",
+      "Poultry (chicken, turkey, or any other bird meats)", 
+      "Fish (finfish)", 
+      "Crustaceans (e.g., shrimp, prawns, crabs, lobster)", 
+      "Mollusks (e.g., clams, oysters, squid, octopus)", 
+      "Butter",
+      "Cheese",
+      "Ice cream", 
+      "Cream", 
+      "Milk (cow's milk)",
+      "Yogurt", 
+      "Eggs",
+      "Potatoes",
+      "Cassava / Other roots", 
+      "Soybean oil", 
+      "Palm oil", 
+      "Sunflower oil",
+      "Rapeseed / canola oil", 
+      "Olive oil", 
+      "Beer", 
+      "Wine", 
+      "Coffee (Ground or whole bean)", 
+      "Sugar" ]`  /]
+[button onClick:`lauraUnit = "lbs"`]Change to lbs[/button]
+[button onClick:`lauraUnit = "kgs"`]Change to kgs[/button]
 [data name:'lauraFoodData' source:'formatted-data.csv' /]
 [ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
 
-// [div style:`{width:'auto', margin: 'auto'}`]
-//[div className:'bar-controls']
-//[button onClick:`unit = "lbs"`]Change to lbs[/button]
-//[/div]
-//[div className:'bar-controls']
-//[button onClick:`unit = "kgs"`]Change to kgs[/button]
-//[/div]
-// [/div]
 
 ## Eating Out
 

@@ -33,12 +33,27 @@ class ScatterplotD3Component extends D3Component {
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
 
+    var xLabel = svg.append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", width)
+      .attr("y", height + 50)
+      .text(props.xAttr);
+
     // // Add Y axis
     var y = d3.scaleLinear()
         .domain([35, 90])
         .range([ height, 0]);
     var yAxis = svg.append("g")
         .call(d3.axisLeft(y));
+
+    var yLabel = svg.append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "end")
+      .attr("y", -50)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text(props.yAttr);
 
     // // Add a scale for bubble size
     var z = d3.scaleLinear()
@@ -49,7 +64,7 @@ class ScatterplotD3Component extends D3Component {
     var myColor = d3.scaleOrdinal()
         .domain(["Graduate", "Undergraduate"])
         // .range(d3.schemeSet2);
-        .range(["gold", "blue", "green", "yellow", "black", "grey", "darkgreen", "pink", "brown", "slateblue", "grey1", "orange"]);
+        .range(["blue", "yellow", "darkgreen", "pink", "brown", "slateblue", "grey1", "orange"]);
 
     // // -1- Create a tooltip div that is hidden by default:
     var tooltip = d3.select(node)
@@ -67,7 +82,7 @@ class ScatterplotD3Component extends D3Component {
         .duration(200)
       tooltip
         .style("opacity", 1)
-        .html("Carbon Cost: " + d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"])
+        .html("Carbon Cost: " + d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"] + " tonnes of CO2")
         .style("left", (d3.mouse(this)[0]+30) + "px")
         .style("top", (d3.mouse(this)[1]+30) + "px")
     };
@@ -86,15 +101,16 @@ class ScatterplotD3Component extends D3Component {
     };
 
     this.render = (props) => {
-      const xAttr = props.xAttr;
-      const yAttr = props.yAttr;
+      var xAttr = props.xAttr;
+      var yAttr = props.yAttr;
     //   // var data = props.data;
       var data = this.updateData(props.data, props.unit);
-      // console.log(d3.max(data.map(function(d) {return d.Pork})));
+      console.log("xAttr: " + props.xAttr);
+      console.log(data.map(function(d) {return d.Pork}));
 
       // Update the X axis
     //   x.domain(data.map(function(d) { return d.food; }));
-      x.domain([0, d3.max(data.map(function(d) {return d.Pork}))]);
+      x.domain([0, d3.max(data.map(function(d) {return d[xAttr]}))]);
       // console.log(data.Pork);
       xAxis.transition().duration(500).call(d3.axisBottom(x))
       .selectAll("text")
@@ -103,9 +119,12 @@ class ScatterplotD3Component extends D3Component {
       .attr("dy", ".15em")
       .attr("transform", "rotate(-45)");
 
+      xLabel.text(xAttr + " (" + props.unit + ")");
+      
       // Update the Y axis
-      y.domain([0, d3.max(data.map(function(d) {return d.Potatoes}))]);
+      y.domain([0, d3.max(data.map(function(d) {return d[yAttr]}))]);
       yAxis.transition().duration(1000).call(d3.axisLeft(y));
+      yLabel.text(yAttr + " (" + props.unit + ")");
 
       z.domain(myColor);
 
@@ -116,9 +135,9 @@ class ScatterplotD3Component extends D3Component {
         .enter()
         .append("circle")
         .attr("class", "bubbles")
-        .attr("cx", function (d) { return x(d.Pork); } )
+        .attr("cx", function (d) { return x(d[xAttr]); } )
         // .attr("cx", function (d) { return x(0.1); } )
-        .attr("cy", function (d) { return y(d.Potatoes); } )
+        .attr("cy", function (d) { return y(d[yAttr]); } )
         // .attr("cy", function (d) { return y(0.1); } )
         // .attr("r", function (d) { return z(d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"]); } )
         .attr("r", function (d) { return d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"] * 70; } )
@@ -179,6 +198,8 @@ class ScatterplotD3Component extends D3Component {
     
       // console.log(foodElement);
     data.forEach((element) => {
+      var elementCopy = Object.assign({}, element);
+      // elementCopy = element;
       mapped_foods.forEach((foodElement) => {
         const units = element["What unit of weight do you prefer to answer with? This will be the unit of weight corresponding to the amount of food you purchase per week."];
         // console.log(element[foodElement]);
@@ -186,16 +207,16 @@ class ScatterplotD3Component extends D3Component {
         if (units === "Pounds (lbs)") {
           // Units are in lbs but we want kgs
           if (unitType === "kgs") {
-            element[foodElement] = element[foodElement] * 0.4536;
+            elementCopy[foodElement] = element[foodElement] * 0.4536;
           }
         } else {
           // Units are in kgs but we want lbs
           if (unitType === "lbs") {
-            element[foodElement] = element[foodElement] * 2.2046;
+            elementCopy[foodElement] = element[foodElement] * 2.2046;
           } 
         }
       });
-      final.push(element);
+      final.push(elementCopy);
       // element[foodElement] = element[foodElement].replace(/\(.*\)/, '');
     });
     
