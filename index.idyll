@@ -63,13 +63,11 @@ Our survey data suggests that the primary methods of travel for grocery shopping
 
 This has interesting policy implications for reducing carbon emissions. Perhaps more grocery options within 2 miles of campus would result in a greater share of people walking instead of driving. At the moment, the closest options to UMD are Lidl and Target, which suggests more can be done to make College Park a more walkable, environmentally friendly city.
 
-## Total Weights of Food Consumption
+## Total Weight of Food Consumption and Carbon Emissions
 
-One of the biggest contributing factors to a student's carbon footprint is the type of food they eat. Different foods/drinks have different amounts of CO2 emitted and 
-land used during production. It is critical to identify certain foods/drinks that students eat the most and bring awareness to the amount of food they are eating compared to
-other foods. These totals are not representative of the whole UMD population, since different people have different consumption weights of different foods, but it 
-gives a sense of what foods/drinks are most consumed by a lot of the students. 
-Feel free to explore the visualization by varying the parameters and hovering over different bars to see the total food weights for all students who were surveyed.
+One of the biggest contributing factors to a student's carbon footprint is the type of food they eat. Different foods/drinks have different amounts of CO2 emitted during production. 
+It is critical to bring awareness to the amount of food students are eating and the carbon impact these
+foods have. Feel free to explore the visualization below by varying the parameters and hovering over different bars to see the total food weights for all students who were surveyed.
 
 [var name:"unit" value:"kgs" /]
 [var name:"sortby" value:"count" /]
@@ -82,9 +80,10 @@ Feel free to explore the visualization by varying the parameters and hovering ov
 [button onClick:`unit="kgs"; sortby="count"; orderby="descending"; search=""; lowerBound="0"; upperBound="50"`]Reset[/button]
 
 [br /]
+These totals are not representative of the whole UMD population, since different people have different consumption weights of different foods.
 We can observe that students consume milk, eggs, and poultry the most on a weekly basis. Milk consumption seems to surpass all other total food consumption weights by a large amount and seems
-to be an outlier in terms of weight. Another interesting observation is that students seem to consume a lot more dairy than meat and seafood combined. Lastly, it seems like olive oil is more widely used among 
-students than rapseed, canola, soybean, palm, and sunflower oil. In one of the following sections we will analyze the total carbon footprint of these foods. 
+to be an outlier in terms of total weight. Another interesting observation is that students seem to consume a lot more dairy than meat and seafood combined. Lastly, it seems like olive oil is more widely used among 
+students than rapseed, canola, soybean, palm, and sunflower oil. In the next visualization, we will analyze the total carbon footprint that these foods have. 
 
 [var name:"sortbyCarbon" value:"count" /]
 [var name:"orderbyCarbon" value:"descending" /]
@@ -95,7 +94,10 @@ students than rapseed, canola, soybean, palm, and sunflower oil. In one of the f
 [BarCarbonControllerComponent sortby:sortbyCarbon orderby:orderbyCarbon search:searchCarbon lowerBound:lowerBoundCarbon upperBound:upperBoundCarbon/]
 [button onClick:`sortbyCarbon="count"; orderbyCarbon="descending"; searchCarbon=""; lowerBoundCarbon="0"; upperBoundCarbon="1"`]Reset[/button]
 
-Even though 
+It is interesting to see how the total weight of beef/buffalo consumption for all students surveyed is 3.33 kgs which is drastically less than 43.5 kgs of milk consumed, but 
+the carbon emissions for beef/buffalo is more than double the carbon emissions of milk. From the two visualizations, we can observe that consuming more of one type of food
+does not necessarily mean that food will have higher carbon emissions than foods that are consumed less. It is important to take action to reduce the 
+consumption of certain foods. 
 
 ## Patterns in Food Choices and Carbon Impact
 One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"

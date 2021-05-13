@@ -94,7 +94,7 @@ class BarD3Component extends D3Component {
     .attr("text-anchor", "middle")  
     .style("font-size", "16px") 
     .style("font-weight", "bold")  
-    .text("Total Food Consumption vs Food");
+    .text("Total Weight of Food Consumption vs Food");
 
      // Add tooltip
      var tooltip = d3.select("body")
