@@ -71,14 +71,12 @@ other foods. These totals are not representative of the whole UMD population, si
 gives a sense of what foods/drinks are most consumed by a lot of the students. 
 Feel free to explore the visualization by varying the parameters and hovering over different bars to see the total food weights for all students who were surveyed.
 
-[var name:"state" value:0 /]
 [var name:"unit" value:"kgs" /]
 [var name:"sortby" value:"count" /]
 [var name:"orderby" value:"descending" /]
 [var name:"search" value:"" /]
 [var name:"lowerBound" value:"0" /]
 [var name:"upperBound" value:"50" /]
-[var name:"selected" value:"Eggs" /]
 [BarD3Component data:foodData unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
 [BarControllerComponent unit:unit sortby:sortby orderby:orderby search:search lowerBound:lowerBound upperBound:upperBound/]
 [button onClick:`unit="kgs"; sortby="count"; orderby="descending"; search=""; lowerBound="0"; upperBound="50"`]Reset[/button]
@@ -86,7 +84,18 @@ Feel free to explore the visualization by varying the parameters and hovering ov
 [br /]
 We can observe that students consume milk, eggs, and poultry the most on a weekly basis. Milk consumption seems to surpass all other total food consumption weights by a large amount and seems
 to be an outlier in terms of weight. Another interesting observation is that students seem to consume a lot more dairy than meat and seafood combined. Lastly, it seems like olive oil is more widely used among 
-students than rapseed, canola, soybean, palm, and sunflower oil. In one of the following sections we will analyze the total carbon footprint of these foods.  
+students than rapseed, canola, soybean, palm, and sunflower oil. In one of the following sections we will analyze the total carbon footprint of these foods. 
+
+[var name:"sortbyCarbon" value:"count" /]
+[var name:"orderbyCarbon" value:"descending" /]
+[var name:"searchCarbon" value:"" /]
+[var name:"lowerBoundCarbon" value:"0" /]
+[var name:"upperBoundCarbon" value:"1" /]
+[BarCarbonD3Component data:foodData sortby:sortbyCarbon orderby:orderbyCarbon search:searchCarbon lowerBound:lowerBoundCarbon upperBound:upperBoundCarbon/]
+[BarCarbonControllerComponent sortby:sortbyCarbon orderby:orderbyCarbon search:searchCarbon lowerBound:lowerBoundCarbon upperBound:upperBoundCarbon/]
+[button onClick:`sortbyCarbon="count"; orderbyCarbon="descending"; searchCarbon=""; lowerBoundCarbon="0"; upperBoundCarbon="1"`]Reset[/button]
+
+Even though 
 
 ## Patterns in Food Choices and Carbon Impact
 One crucial question we might ask ourselves is, "How does our food choices affect our carbon impact?"
@@ -152,8 +161,10 @@ Y-Axis Food:
       "Coffee (Ground or whole bean)", 
       "Sugar" ]`  /]
 [br /][br /]
+[div className:"controls-bar-wrapper"]
 [button onClick:`lauraUnit = "lbs"`]Change to lbs[/button]
 [button onClick:`lauraUnit = "kgs"`]Change to kgs[/button]
+[/div]
 [data name:'lauraFoodData' source:'formatted-data.csv' /]
 [ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
 
@@ -194,11 +205,11 @@ As much as cooking at home is appealing for both sustainability and one's wallet
 }` /]
 
 Color by:
-  [button onClick:`colorBy = {}` ]None[/button]
-  [button onClick:`colorBy = {field: 'Are you an undergraduate or graduate student?', title: 'Program', scale: {range: ['#E72200', '#F2AA00']}}` ]Program[/button]
-  [button onClick:`colorBy = {field: 'What gender do you identify as?', title: 'Gender', scale: {range: ['#FF33FF', '#337FFF']}}` ]Gender[/button]
-  [button onClick:`colorBy = {field: 'What is your major?', title: 'Major', scale: {range: ['#20C000', '#9433F2']}}` ]Major[/button]
-  [button onClick:`colorBy = {field: 'How many years are you into your program?', title: 'Years', scale: {scheme: 'set1'}}` ]Years[/button]
+  [button className: "eating-out-button" onClick:`colorBy = {}` ]None[/button]
+  [button className: "eating-out-button" onClick:`colorBy = {field: 'Are you an undergraduate or graduate student?', title: 'Program', scale: {range: ['#E72200', '#F2AA00']}}` ]Program[/button]
+  [button className: "eating-out-button" onClick:`colorBy = {field: 'What gender do you identify as?', title: 'Gender', scale: {range: ['#FF33FF', '#337FFF']}}` ]Gender[/button]
+  [button className: "eating-out-button" onClick:`colorBy = {field: 'What is your major?', title: 'Major', scale: {range: ['#20C000', '#9433F2']}}` ]Major[/button]
+  [button className: "eating-out-button" onClick:`colorBy = {field: 'How many years are you into your program?', title: 'Years', scale: {scheme: 'set1'}}` ]Years[/button]
 
 [br /]
 

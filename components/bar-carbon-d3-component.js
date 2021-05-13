@@ -7,7 +7,7 @@ const globalHeight = 500;
 
 
 // Bar graph code was adapted from: https://www.d3-graph-gallery.com/graph/barplot_button_data_hard.html
-class BarD3Component extends D3Component {
+class BarCarbonD3Component extends D3Component {
   mapped_foods = [
     "Beef / buffalo",
     "Lamb / goat",
@@ -82,7 +82,9 @@ class BarD3Component extends D3Component {
     .attr("dy", "-2.5em")
     .attr("transform", `rotate(-90)`)
     .attr("font-size", "12px")
-    .text(`Total ${props.unit} of Food`);
+    .transition()
+    .duration(400)
+    .text("Total CO2 Emissions in Tonnes");
 
     // Bold axes labels
     svg.selectAll('.axis-label').style("font-weight", "bold");
@@ -94,7 +96,7 @@ class BarD3Component extends D3Component {
     .attr("text-anchor", "middle")  
     .style("font-size", "16px") 
     .style("font-weight", "bold")  
-    .text("Total Food Consumption vs Food");
+    .text("Total Carbon Emissions vs Food");
 
      // Add tooltip
      var tooltip = d3.select("body")
@@ -112,10 +114,7 @@ class BarD3Component extends D3Component {
       // Remove tooltip if necessary
       tooltip.style("visibility", "hidden")
 
-      var data = this.updateData(props);
-
-      // Update Y label if there is a change of units
-      yLabel.transition().duration(400).text(`Total ${props.unit} of Food`);
+      var data = this.updateCarbonData(props);
 
       // Update the X axis
       x.domain(data.map(function(d) { return d.food }));
@@ -141,14 +140,14 @@ class BarD3Component extends D3Component {
           .attr("fill", "#2a6592");
 
       rects.on("mouseover", function(d) {		
-          return tooltip.html(`${d.food}: ~` + d.count.toFixed(3) + ` ${props.unit}`)	
+          return tooltip.html(`${d.food}: ~` + d.count + " Tonnes")	
             .style("visibility", "visible")
               .style("left", (d3.event.pageX + 20) + "px")		
               .style("top", (d3.event.pageY - 125) + "px");	
           })
         .on("mousemove", function(d){
           return tooltip
-            .html(`${d.food}: ~` + d.count.toFixed(3) + ` ${props.unit}`)
+            .html(`${d.food}: ~` + (d.count > 0.0001 ? d.count.toFixed(3) : d.count.toFixed(6)) + " Tonnes")
             .style("visibility", "visible")
             .style("left",(d3.event.pageX + 20) + "px")
             .style("top", (d3.event.pageY - 125) + "px");
@@ -189,13 +188,38 @@ class BarD3Component extends D3Component {
     this.render(props);
   }
 
-  // Unit type can either be 'lbs' or 'kgs'
-  updateData(props) {
+  updateCarbonData(props) {
     const data = props.data
     const sortby = props.sortby;
     const orderby = props.orderby;
-    const unit = props.unit;
     const range = props.range;
+    const carbon_foods = {
+      "Beef / buffalo": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Beef & buffalo meat",
+      "Lamb / goat": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Lamb/mutton & goat meat",
+      "Pork": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Pork (pig meat)",
+      "Poultry (chicken, turkey, or any other bird meats)": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Poultry (chicken, turkey)",
+      "Fish (finfish)": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Fish (finfish)",
+      "Crustaceans (e.g., shrimp, prawns, crabs, lobster)": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Crustaceans (shrimp/prawns)",
+      "Mollusks (e.g., clams, oysters, squid, octopus)": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Mollusks",
+      "Butter": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Butter",
+      "Cheese": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Cheese",
+      "Ice Cream": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Ice cream",
+      "Cream": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Cream",
+      "Milk (cow's milk)": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Milk (cow's milk)",
+      "Yogurt": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Yogurt",
+      "Eggs": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Eggs",
+      "Potatoes": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Potatoes",
+      "Cassava / Other roots": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Cassava and Other Roots",
+      "Soybean oil": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Soybeans (Oil)",
+      "Palm oil": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Palm (Oil)",
+      "Sunflower oil": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Sunflower (Oil)",
+      "Rapeseed / canola oil": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Rapeseed/canola (Oil)",
+      "Olive oil": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Olives (Oil)",
+      "Beer": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Barley (Beer)",
+      "Wine": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Wine Grapes (Wine)",
+      "Sugar": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Sugars and sweeteners",
+      "Coffee (Ground or whole bean)": "Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Coffee"
+    };
     var final = [];
     var re = new RegExp('^' + props.search.toLowerCase() + '.*$');
     this.mapped_foods.forEach((food) => {
@@ -206,21 +230,8 @@ class BarD3Component extends D3Component {
 
     final.forEach((foodElement) => {
       data.forEach((element) => {
-        const units = element["What unit of weight do you prefer to answer with? This will be the unit of weight corresponding to the amount of food you purchase per week."];
-        var convertedCount = element[foodElement["food"]];
-        if (units === "Pounds (lbs)") {
-          // Units are in lbs but we want kgs
-          if (unit === "kgs") {
-            convertedCount = element[foodElement["food"]] * 0.4536
-          }
-        } else {
-          // Units are in kgs but we want lbs
-          if (unit === "lbs") {
-            convertedCount = element[foodElement["food"]] * 2.2046
-          } 
-        }
-
-        foodElement["count"] += convertedCount;
+        const carbonName = carbon_foods[foodElement['food']];
+        foodElement["count"] += element[carbonName];
       });
       foodElement["food"] = foodElement["food"].replace(/\(.*\)/, '');
     });
@@ -234,6 +245,7 @@ class BarD3Component extends D3Component {
     }
     return final.slice(0, range);
   }
+    
 }
 
-module.exports = BarD3Component;
+module.exports = BarCarbonD3Component;

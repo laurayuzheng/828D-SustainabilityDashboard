@@ -54,7 +54,7 @@ class BarControllerComponent extends React.Component {
 
     render() {
         return (
-            <div className="controls">
+            <div className="controls-bar-wrapper">
                 <label className="bar-controls-labels" htmlFor="units">Units:</label>
                 <select className="bar-controls" id="units" onChange={this.changeUnits.bind(this)}  value={this.props.unit}>
                     <option value="lbs">Pounds (lbs)</option>

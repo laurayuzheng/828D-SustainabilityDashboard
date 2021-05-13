@@ -43,7 +43,7 @@
 }
 
 .bar-controls-bounds {
-  width: 100px;
+  width: 75px;
 }
 
 .bar-controls-labels {
@@ -51,14 +51,14 @@
   margin-right: 5px;
 }
 
-.controls {
+.controls-bar-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
 }
 
-button {
+.eating-out-button {
   position: relative;
   display: inline-block;
   margin: 2px;

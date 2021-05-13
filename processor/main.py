@@ -92,6 +92,12 @@ class Processor():
         self.survey_df['Are you involved in any sustainability groups on campus? If so, which ones? (groups on campus: https://sustainability.umd.edu/get-involved/students/student-groups)'].fillna('no', inplace=True)
         self.survey_df['Have you worked on a project that is sustainability or carbon footprint related? If so, explain.'].fillna('no', inplace=True)
 
+        # Rename eating out columns
+        self.survey_df.rename(columns={
+            "How many meals do you eat out for a week? Breakfast, lunch, and dinner each count as 1 meal each." : "eating_out_food",
+            "How many beverages do you purchase a week? Think of places like Starbucks, bubble tea shops, smoothie shops, etc.": "eating_out_drink",
+        })
+
         # Might need to standardize answers to question: 'Are you involved in any sustainability groups on campus?' 
 
         # Might need to standardize answers to question: 'Have you worked on a project that is sustainability or carbon footprint related?'
@@ -129,11 +135,14 @@ if __name__ == "__main__":
     processor = Processor()
     # Currently, only individual food totals are included
     included_cells = [('B', '70'), ('G', '70'), ('L', '70'), ('Q', '70'), ('V', '70'), ('AA', '70')]
+    food_rows = [5, 6, 8, 9, 19, 20, 21, 11, 12, 13, 14, 15, 16, 17, 53, 54, 57, 58, 59, 60, 61, 63, 64, 55, 67]
+    for row in food_rows:
+        included_cells.append(('V', str(row)))
     processor.tidy_data()
     processor.calculate(included_cells)
 
     # Output to 'data' folder in the root directory
-    processor.survey_df.to_csv('../data/formatted-data.csv', index=False)
+    processor.survey_df.to_csv('../data/formatted-data-1.csv', index=False)
 
 
 
