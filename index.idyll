@@ -110,6 +110,7 @@ In this visualization, the blue circles represent the graduate data, while the g
 [var name:"xAttr" value:"Beef / buffalo" /]
 [var name:"yAttr" value:"Potatoes" /]
 [var name:"lauraUnit" value:"lbs" /]
+[var name:"demographic" value:"Gender"/]
 
 X-Axis Food: 
 [Select value:xAttr options:`["Beef / buffalo",
@@ -164,13 +165,20 @@ Y-Axis Food:
       "Wine", 
       "Coffee (Ground or whole bean)", 
       "Sugar" ]`  /]
+
+Demographic (Color): 
+[Select value:demographic options:`[ "Gender",
+"Major",
+"Student Type"
+]` 
+/]
 [br /][br /]
 [div className:"controls-bar-wrapper"]
 [button onClick:`lauraUnit = "lbs"`]Change to lbs[/button]
 [button onClick:`lauraUnit = "kgs"`]Change to kgs[/button]
 [/div]
 [data name:'lauraFoodData' source:'formatted-data.csv' /]
-[ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit /]
+[ScatterplotD3Component data:lauraFoodData xAttr:xAttr yAttr:yAttr unit:lauraUnit demographic:demographic /]
 
 ## Eating Out
 

@@ -16,6 +16,11 @@ class ScatterplotD3Component extends D3Component {
     var margin = {top: 30, right: 30, bottom: 90, left: 60};
     var width = globalWidth - margin.left - margin.right;
     var height = globalHeight - margin.top - margin.bottom;
+    var demographic = props.demographic; 
+    var demoDict = {"Student Type": "Are you an undergraduate or graduate student?", 
+        "Gender":"What gender do you identify as?", 
+        "Major":"What is your major?"}
+    var demoAttr = demoDict[demographic]; // this string is what will be used to index the data
 
     const svg = (this.svg = d3.select(node)
     .append("svg")
@@ -62,7 +67,7 @@ class ScatterplotD3Component extends D3Component {
 
     // // Add a scale for bubble color
     var myColor = d3.scaleOrdinal()
-        .domain(["Graduate", "Undergraduate"])
+        .domain(["Female", "Male"])
         // .range(d3.schemeSet2);
         .range(["blue", "yellow", "darkgreen", "pink", "brown", "slateblue", "grey1", "orange"]);
 
@@ -82,7 +87,7 @@ class ScatterplotD3Component extends D3Component {
         .duration(200)
       tooltip
         .style("opacity", 1)
-        .html("Carbon Cost: " + d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"] + " tonnes of CO2")
+        .html("Carbon Cost: " + d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"] + " tonnes of CO2 <br> " + demographic + ": " + d[demoAttr])
         .style("left", (d3.mouse(this)[0]+30) + "px")
         .style("top", (d3.mouse(this)[1]+30) + "px")
     };
@@ -103,6 +108,10 @@ class ScatterplotD3Component extends D3Component {
     this.render = (props) => {
       var xAttr = props.xAttr;
       var yAttr = props.yAttr;
+      demographic = props.demographic; 
+      demoAttr = demoDict[demographic]; // this string is what will be used to index the data
+      
+      console.log("demographic: " + demographic);
     //   // var data = props.data;
       var data = this.updateData(props.data, props.unit);
       console.log("xAttr: " + props.xAttr);
@@ -126,6 +135,9 @@ class ScatterplotD3Component extends D3Component {
       yAxis.transition().duration(1000).call(d3.axisLeft(y));
       yLabel.text(yAttr + " (" + props.unit + ")");
 
+      var uniqueVals = d3.set(data, function(d) {return d[demoAttr]});
+      // console.log(demoAttr);
+      myColor.domain(uniqueVals);
       z.domain(myColor);
 
       var u = svg.append('g')
@@ -141,7 +153,7 @@ class ScatterplotD3Component extends D3Component {
         // .attr("cy", function (d) { return y(0.1); } )
         // .attr("r", function (d) { return z(d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"]); } )
         .attr("r", function (d) { return d["Metric 2 + 4:Total Annual Food Related Carbon Costs:(tonnes CO2):Food:Total"] * 70; } )
-        .style("fill", function (d) { return myColor(d["Are you an undergraduate or graduate student?"]); } )
+        .style("fill", function (d) { return myColor(d[demoAttr]); } )
         // -3- Trigger the functions
         .on("mouseover", showTooltip )
         .on("mousemove", moveTooltip )
