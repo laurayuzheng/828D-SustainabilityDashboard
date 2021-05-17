@@ -98,18 +98,12 @@ class Processor():
             "How many beverages do you purchase a week? Think of places like Starbucks, bubble tea shops, smoothie shops, etc.": "eating_out_drink",
         })
 
+        # ADDITIONAL PROCESSING THAT MIGHT NEED TO BE DONE IN THE FUTURE:
         # Might need to standardize answers to question: 'Are you involved in any sustainability groups on campus?' 
-
         # Might need to standardize answers to question: 'Have you worked on a project that is sustainability or carbon footprint related?'
-
         # Might need to standardize answers to question: 'How many meals do you eat out for a week? Breakfast, lunch, and dinner each count as 1 meal each.'
         # There is a '1/2' as entry which might cause problems
-
         # Might need to standardize answers to question: 'On average, how many miles do you travel per week to do grocery shopping?'
-
-        # # Fill in missing data in dataframe
-        # with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-        #     print(survey_df)
 
     def __construct_columns(self, cell_lst):
         additional_columns = {}
