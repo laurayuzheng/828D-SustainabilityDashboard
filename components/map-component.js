@@ -12,7 +12,7 @@ class MapComponent extends D3Component {
 
   initialize(node, props) {
     var margin = {top: 30, right: 30, bottom: 90, left: 40};
-    var width = globalWidth ;
+    var width = globalWidth-250;
     var height = globalHeight;
 
     const svg = d3.select(node)
@@ -24,7 +24,7 @@ class MapComponent extends D3Component {
           "translate(" + margin.left + "," + margin.top + ")");
 
     var projection = d3.geoMercator()
-      .center([-77.2, 39.1])                // GPS of location to zoom on
+      .center([-77.15, 39.1])                // GPS of location to zoom on
       .scale(85000)                       // This is like the zoom
       .translate([ 0, 0 ])
 
