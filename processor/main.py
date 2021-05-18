@@ -136,7 +136,7 @@ if __name__ == "__main__":
     processor.calculate(included_cells)
 
     # Output to 'data' folder in the root directory
-    processor.survey_df.to_csv('../data/formatted-data-1.csv', index=False)
+    processor.survey_df.to_csv('../data/formatted-data.csv', index=False)
 
 
 
